@@ -6,3 +6,6 @@ GNN/*/*.csv
 NeuralNetwork/*/*.csv
 */__pycache__
 .idea
+/OtherTries/all_matches_final.csv
+/OtherTries/X_test.csv
+/OtherTries/y_test.csv

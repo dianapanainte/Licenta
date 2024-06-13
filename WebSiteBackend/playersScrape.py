@@ -2,65 +2,65 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from bs4 import BeautifulSoup
+from GNN import database as gnn
 
 service = Service()
 options = webdriver.ChromeOptions()
-options.add_argument('--headless')  # Run in headless mode if you don't need a GUI
-driver = webdriver.Chrome(service=service, options=options)
+driver = webdriver.Chrome(service=service)
 
-# URL of the webpage
-url = "https://www.wtatennis.com/players"
+driver.get('https://www.wtatennis.com/players')
 
-# Open the webpage
-driver.get(url)
+WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
 
 
-# Function to scroll down the page
-def scroll_down(driver):
-    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(2)  # Adjust sleep time as needed
+def get_player_list():
+    players = gnn.get_players_name()
+    return players
 
 
-# Initial scroll to load dynamic content
-scroll_down(driver)
+players_list = get_player_list()
 
-# Keep scrolling until no new content is loaded
-while True:
-    # Get current page height
-    last_height = driver.execute_script("return document.body.scrollHeight")
+button_search = WebDriverWait(driver, 30).until(
+    EC.presence_of_element_located((By.CLASS_NAME, 'player-search__button'))
+)
+if button_search:
+    print("Found the search button")
+else:
+    print("Could not find the search button")
+button_search.click()
 
-    # Scroll down to the bottom
-    scroll_down(driver)
 
-    time.sleep(5)  # Adjust sleep time as needed
-
-    # Wait to see if new content loads
-    WebDriverWait(driver, 20).until(
-        lambda driver: driver.execute_script("return document.body.scrollHeight") > last_height
+def search_player(player_name):
+    search_bar = WebDriverWait(driver, 30).until(
+        EC.presence_of_element_located((By.CLASS_NAME, 'player-search__input'))
     )
+    search_bar.clear()
 
-    # Calculate new scroll height and compare with last scroll height
-    new_height = driver.execute_script("return document.body.scrollHeight")
-    if new_height == last_height:
-        break
+    search_bar.send_keys(player_name)
+    time.sleep(2)
 
-# Get the page source and parse it with BeautifulSoup
-page_source = driver.page_source
-soup = BeautifulSoup(page_source, 'html.parser')
+    try:
+        search_results = WebDriverWait(driver, 10).until(
+            EC.presence_of_all_elements_located((By.CLASS_NAME, 'players__list-item'))
+        )
+        print(f"Found {len(search_results)} search results for {player_name}")
 
-# Find all <a> elements with a specific class and extract the href attributes
-player_links = soup.find_all('a',
-                             class_='player-thumbnail__inner player-thumbnail__inner--link')  # Adjust the class name as needed
+        for result in search_results:
+            return result.find_element(By.TAG_NAME, 'a').get_attribute('href')
+    except Exception as e:
+        print(f"No results found for {player_name}")
+        return None
+    finally:
+        search_bar.clear()
 
-# Print the href attributes
-for link in player_links:
-    href = link.get('href')
-    if href:
-        print(href)
 
-# Close the WebDriver
+for player in players_list:
+    player_url = search_player(player)
+    print(f"{player}: {player_url}")
+
 driver.quit()

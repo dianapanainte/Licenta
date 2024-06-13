@@ -28,6 +28,13 @@ def check_player(player_name):
     return None
 
 
+def get_players_name():
+    sql = 'SELECT player_name FROM players_gnn;'
+    cursor.execute(sql)
+    players = cursor.fetchall()
+    return players
+
+
 if __name__ == "__main__":
     # read_and_insert_into_db_from_csv_file()
     # cursor.execute("SELECT * FROM tennis")
