@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Favourites</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/favourites.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+</head>
+<body>
+<div class="sidebar">
+    <div class="top">
+        <div class="logo">
+            <i class='bx bx-tennis-ball'></i>
+            <span>TennisApp</span>
+        </div>
+        <i class="bx bx-chevron-right" id="btn"></i>
+    </div>
+    <div class="user">
+        <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
+        <div>
+            <p class="bold">Your name</p>
+            <p>Admin</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="{% url 'dashboard' %}">
+                <i class='bx bx-home-alt'></i>
+                <span class="nav-item">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a href="{% url 'favourites' %}">
+                <i class='bx bx-heart'></i>
+                <span class="nav-item">Favourites</span>
+            </a>
+            <span class="tooltip">Favourites</span>
+        </li>
+        <li>
+            <a href="{% url 'account' %}">
+                <i class='bx bx-user'></i>
+                <span class="nav-item">Account</span>
+            </a>
+            <span class="tooltip">Account</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="nav-item">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+        <li>
+            <a href="#" id="logoutLink">
+                <i class='bx bx-log-out'></i>
+                <span class="nav-item">Logout</span>
+            </a>
+            <form id="logoutForm" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+            <span class="tooltip">Logout</span>
+        </li>
+    </ul>
+</div>
+<div class="header">
+    <img src="{% static 'dashboard/images/login_half_page.jpg' %}" class="profile-img" alt="tennis">
+    <div class="header-text">Favourites</div>
+</div>
+<div class="main-content">
+    <div class="container">
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom card">
+                <div class="simple-data">Last tourney played: Roland Garros, US Open</div>
+                <div class="simple-data">Age:</div>
+                <div class="links-to-data card-content">
+                    <div class="data btn-open-popover">Career</div>
+                    <div class="data">Statistics</div>
+                </div>
+                <div class="popover">
+                    <!-- Popover content here -->
+                    <div class="career-content">Player career details here</div>
+                    <button class="btn-close-popover">Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+            </div>
+        </div>
+        <div class="container-left">
+            <div class="container-left-top">Roger Federer</div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom card">
+                <div class="simple-data">Last tourney played: Roland Garros, US Open</div>
+                <div class="simple-data">Age:</div>
+                <div class="links-to-data card-content">
+                    <div class="data btn-open-popover">Career</div>
+                    <div class="data">Statistics</div>
+                </div>
+                <div class="popover">
+                    Second popover content here
+                    <button class="btn-close-popover">Close Popover</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    let sidebar = document.querySelector(".sidebar")
+    let btn = document.querySelector("#btn")
+
+    btn.onclick = function () {
+        sidebar.classList.toggle("active")
+    };
+</script>
+<script src="{% static 'dashboard/js/logout.js' %}"></script>
+<script src="{% static 'dashboard/js/favourites.js' %}"></script>
+
+</html>

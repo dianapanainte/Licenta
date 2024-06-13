@@ -1,0 +1,64 @@
+body {
+    background-color: #000;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container {
+    padding: 20px;
+    border: 1px solid #6e0f0f;
+    border-radius: 10px;
+    background-color: #6e0f0f;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 60%;
+    letter-spacing: 1px;
+}
+
+.delete-confirmation {
+    margin: 20px;
+    font-family: 'Inika', sans-serif;
+    background-color: #fff;
+    color: #e60e0e;
+    text-decoration: none;
+    padding: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: #e60e0e 1px solid;
+    border-radius: 10px;
+}
+
+.delete-confirmation:hover {
+    background-color: #6e0f0f;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: #fff 1px solid;
+}
+
+.cancel-button {
+    margin: 10px;
+    font-family: 'Inika', sans-serif;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    padding: 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border-radius: 10px;
+}
+
+.cancel-button:hover {
+    background-color: #fff;
+    color: #e60e0e;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}

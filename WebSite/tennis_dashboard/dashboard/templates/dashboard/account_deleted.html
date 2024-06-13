@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/delete_own_account.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+    <title>Account Deleted</title>
+</head>
+<body>
+<h2>Your account has been successfully deleted.</h2>
+<a href="{% url 'dashboard' %}">Go to Home</a>  <!-- Redirect to home or appropriate URL -->
+</body>
+</html>

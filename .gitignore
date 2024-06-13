@@ -1,3 +1,8 @@
 Database/atp_tennis.csv
 Database/post_atp_tennis.csv
+Regresie_logistica_24_03_2024/*/*.csv
+OtherTries/*/*.csv
+GNN/*/*.csv
+NeuralNetwork/*/*.csv
+*/__pycache__
 .idea

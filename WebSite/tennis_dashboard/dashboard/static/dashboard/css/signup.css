@@ -1,0 +1,116 @@
+body {
+    font-family: 'Inika', serif;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 1020px;
+    height: 700px;
+    background-color: #131C2D;
+    border-radius: 3.3rem;
+    box-shadow: 0 60px 40px -20px rgba(0, 0, 0, 0.27);
+}
+
+.inner-container {
+    position: absolute;
+    width: calc(100% - 4.1rem);
+    height: calc(100% - 4.1rem);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-content {
+    position: absolute;
+    height: 100%;
+    width: 55%;
+    top: 0;
+    left: 0;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.image-container {
+    position: absolute;
+    height: 100%;
+    width: 45%;
+    left: 55%;
+    top: 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    letter-spacing: 2px;
+}
+
+.image {
+    position: absolute;
+    width: auto;
+    height: 100%;
+    border-radius: 10px;
+}
+
+.form {
+    padding: 10px;
+}
+
+.login-button, .signup-button {
+    border: none;
+    border-radius: 5px;
+    background-color: #5E28AD;
+    color: #fff;
+    width: 250px;
+    padding: 10px;
+    margin: 20px;
+    font-family: 'Inika', serif;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 0;
+    letter-spacing: 2px;
+}
+
+.login-button:hover {
+    background-color: #4D1F9C;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.27);
+}
+
+/*---------------FOR THE FORM-------*/
+form label {
+    display: block;
+    margin: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="email"] {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/*-----------------already have account---------*/
+.link-signup-login {
+    color: #8f79ba;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.link-signup-login:hover {
+    color: #A4C2FF;
+}
+
+.no-account {
+    align-self: flex-end;
+    margin: 10px;
+}

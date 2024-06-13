@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/account.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/delete_own_account.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+    <title>Delete Account</title>
+</head>
+<body>
+<div class="main-content">
+    <div class="container">
+        <h2>Are you sure you want to delete your account?</h2>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="delete-confirmation">Confirm Delete</button>
+        </form>
+        <a href="{% url 'account' %}" class="cancel-button">Cancel</a>
+    </div>
+</div>
+</body>
+</html>

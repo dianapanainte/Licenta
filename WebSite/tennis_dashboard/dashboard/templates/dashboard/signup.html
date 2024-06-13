@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SignUp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/signup.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+<div class="sidebar">
+    <div class="top">
+        <div class="logo">
+            <i class='bx bx-tennis-ball'></i>
+            <span>TennisApp</span>
+        </div>
+        <i class="bx bx-chevron-right" id="btn"></i>
+    </div>
+    <div class="user">
+        <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
+        <div>
+            <p class="bold">Your name</p>
+            <p>Admin</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="#">
+                <i class='bx bx-home-alt'></i>
+                <span class="nav-item">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-heart'></i>
+                <span class="nav-item">Favourites</span>
+            </a>
+            <span class="tooltip">Favourites</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-user'></i>
+                <span class="nav-item">Account</span>
+            </a>
+            <span class="tooltip">Account</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="nav-item">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+    </ul>
+</div>
+<div class="header">
+    <img src="{% static 'dashboard/images/login_half_page.jpg' %}" class="profile-img" alt="tennis">
+    <div class="header-text">Tennis Prediction</div>
+</div>
+<div class="main-content">
+    <div class="container">
+        <div class="inner-container">
+            <div class="login-content">
+                <div class="form">
+                    <h1>Sign Up</h1>
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.username.errors }}
+                        <label for="{{ form.username.id_for_label }}">Username:</label>
+                        {{ form.username }}
+                        <br>
+                        {{ form.email.errors }}
+                        <label for="{{ form.email.id_for_label }}">Email:</label>
+                        {{ form.email }}
+                        <br>
+                        {{ form.password1.errors }}
+                        <label for="{{ form.password1.id_for_label }}">Password:</label>
+                        {{ form.password1 }}
+                        <br>
+                        {{ form.password2.errors }}
+                        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                        {{ form.password2 }}
+                        <br>
+                        <button type="submit" class="signup-button">Sign Up</button>
+                    </form>
+                </div>
+                <div class="no-account">
+                    Already have an account? <a href="{% url 'login' %}" class="link-signup-login">Login</a>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="{% static 'dashboard/images/login.png' %}" alt="login" class="image">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script>
+    let sidebar = document.querySelector(".sidebar")
+    let btn = document.querySelector("#btn")
+
+    btn.onclick = function () {
+        sidebar.classList.toggle("active")
+    };
+</script>
+</html>
