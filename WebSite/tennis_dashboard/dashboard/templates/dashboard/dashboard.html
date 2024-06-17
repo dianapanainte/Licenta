@@ -99,7 +99,22 @@
             <div class="container-right-top">Recent tournaments</div>
             <hr class="container-left-divider">
             <div class="container-left-bottom">
-
+                {% for tournament in tournaments %}
+                <div class="tournament">
+                    <div>
+                        <b>Tournament:</b> {{ tournament.title }}
+                    </div>
+                    <div>
+                        <b>Location:</b> {{ tournament.location }}
+                    </div>
+                    <div>
+                        <b>Date:</b> {{ tournament.date }}
+                    </div>
+                    <div>
+                        <b>Surface:</b> {{ tournament.surface }}
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -3,11 +3,13 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
+from .models import RecentTournament
 
 
 @login_required(login_url='/login/')
 def dashboard_view(request):
-    return render(request, 'dashboard/dashboard.html')
+    tournaments = RecentTournament.objects.all()
+    return render(request, 'dashboard/dashboard.html', {'tournaments': tournaments})
 
 
 @login_required(login_url='/login/')

@@ -30,7 +30,7 @@ if response.status_code == 200:
 
         print(f"Height: {height}")
         print(f"Hand: {hand}")
-        print(f"Data of birth: {birthday}")
+        print(f"Date of birth: {birthday}")
         print(f"Country: {country}")
     else:
         print("Could not find the details section on the webpage.")

@@ -239,7 +239,7 @@ body {
 .container-left {
     margin: 30px;
     padding: 15px;
-    height: 50vh;
+    height: 90vh;
     width: 70vh;
     background-color: #131C2D;
     border-radius: 20px;
@@ -274,15 +274,33 @@ body {
 .container-right {
     margin: 30px;
     padding: 20px;
-    height: 50vh;
+    height: 90vh;
     width: 70vh;
     background-color: #131C2D;
     border-radius: 20px;
     box-shadow: 0 0 15px #A4C2FF;
-
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
+
+.container-right::-webkit-scrollbar {
+    width: 12px;
+}
+
+.container-right::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.container-right::-webkit-scrollbar-thumb {
+    background: #1b1e34;
+    border-radius: 6px;
+}
+
+.container-right::-webkit-scrollbar-thumb:hover {
+    background: #090D15;
+}
+
 
 .container-right-top {
     margin: 20px;
@@ -380,6 +398,19 @@ body {
 }
 
 .chosen-container ul.chosen-results li.highlighted {
-  background-color: #202E4C;
-  background-image: none;
+    background-color: #202E4C;
+    background-image: none;
+}
+
+.tournament {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    height: 80px;
+    width: 60vh;
+    box-shadow: 0 0 3px #A4C2FF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
