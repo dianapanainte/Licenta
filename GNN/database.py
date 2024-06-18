@@ -35,6 +35,14 @@ def get_players_name():
     return players
 
 
+def get_last_players():
+    # get all the players, but without the first 748
+    sql = 'SELECT player_name FROM players_gnn WHERE player_id > 747;'
+    cursor.execute(sql)
+    players = cursor.fetchall()
+    return players
+
+
 if __name__ == "__main__":
     # read_and_insert_into_db_from_csv_file()
     # cursor.execute("SELECT * FROM tennis")

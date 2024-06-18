@@ -39,8 +39,8 @@ def logistic_regression():
     # Training data
     data_training = pd.DataFrame(features.training_data())
     data_training = one_hot_encoding(data_training)
-    X_train = data_training[feature_cols]  # Features
-    y_train = data_training.Outcome  # Target variable
+    X_train = data_training[feature_cols]
+    y_train = data_training.Outcome
     value_counts = y_train.value_counts()
 
     print("Value counts:")
