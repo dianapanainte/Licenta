@@ -101,3 +101,25 @@ class UserFavorite(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.player.name}"
+
+
+class PlayerStats(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='stats')
+    height = models.CharField(max_length=10)
+    hand = models.CharField(max_length=10)
+    rank = models.CharField(max_length=10)
+    age = models.CharField(max_length=10)
+    wins_semester = models.CharField(max_length=10)
+    losses_semester = models.CharField(max_length=10)
+    wins_year = models.CharField(max_length=10)
+    losses_year = models.CharField(max_length=10)
+    wins_clay = models.CharField(max_length=10)
+    losses_clay = models.CharField(max_length=10)
+    wins_hard = models.CharField(max_length=10)
+    losses_hard = models.CharField(max_length=10)
+    wins_grass = models.CharField(max_length=10)
+    losses_grass = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.player} - stats"
+

@@ -58,12 +58,12 @@ def convert_to_date(date_str):
 
 # check if a date falls within the last 6 months
 def within_last_6_months(date_of_the_game):
-    six_months_ago = convert_to_date("20191231") - timedelta(days=30 * 6)
+    six_months_ago = convert_to_date("20161231") - timedelta(days=30 * 6)
     return date_of_the_game >= six_months_ago
 
 
 def within_last_year(date):
-    a_year_ago = convert_to_date("20191231") - timedelta(days=30 * 12)
+    a_year_ago = convert_to_date("20161231") - timedelta(days=30 * 12)
     return date >= a_year_ago
 
 
@@ -334,21 +334,21 @@ def read_csv(csv_file, data, players):
 def training_data():
     # !!!when adding/deleting more years from the csv files, make sure to update the function from above ^^^^^
     data, players = initialize_data()
-    read_csv('csv_folder/wta_matches_2004.csv', data, players)
-    read_csv('csv_folder/wta_matches_2005.csv', data, players)
-    read_csv('csv_folder/wta_matches_2006.csv', data, players)
-    read_csv('csv_folder/wta_matches_2007.csv', data, players)
-    read_csv('csv_folder/wta_matches_2008.csv', data, players)
-    read_csv('csv_folder/wta_matches_2009.csv', data, players)
-    read_csv('csv_folder/wta_matches_2010.csv', data, players)
-    read_csv('csv_folder/wta_matches_2011.csv', data, players)
-    read_csv('csv_folder/wta_matches_2012.csv', data, players)
-    read_csv('csv_folder/wta_matches_2013.csv', data, players)
-    read_csv('csv_folder/wta_matches_2014.csv', data, players)
-    read_csv('csv_folder/wta_matches_2015.csv', data, players)
-    read_csv('csv_folder/wta_matches_2016.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2004.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2005.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2006.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2007.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2008.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2009.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2010.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2011.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2012.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2013.csv', data, players)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2014.csv', data, players)
+    # read_csv('csv_folder/wta_matches_2015.csv', data, players)
+    # read_csv('csv_folder/wta_matches_2016.csv', data, players)
 
-    csv_output = 'csv_folder/data_3_0.csv'
+    csv_output = 'F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/data_3_0.csv'
     with open(csv_output, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=data.keys())
 
@@ -362,11 +362,23 @@ def training_data():
     return data
 
 
+def validation_data():
+    data_validation, players_validation = initialize_data()
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2015.csv', data_validation,
+             players_validation)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2016.csv', data_validation,
+             players_validation)
+    return data_validation
+
+
 def testing_data():
     data_test, players_test = initialize_data()
-    read_csv('csv_folder/wta_matches_2017.csv', data_test, players_test)
-    read_csv('csv_folder/wta_matches_2018.csv', data_test, players_test)
-    read_csv('csv_folder/wta_matches_2019.csv', data_test, players_test)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2017.csv', data_test,
+             players_test)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2018.csv', data_test,
+             players_test)
+    read_csv('F:/GithubCloning/Licenta/Regresie_logistica_24_03_2024/csv_folder/wta_matches_2019.csv', data_test,
+             players_test)
     return data_test
 
 

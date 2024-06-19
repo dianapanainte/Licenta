@@ -1,8 +1,10 @@
 import csv
+import json
 from datetime import datetime, timedelta
 import random
+from GNN import database
 
-# Set a larger field size limit (e.g., 10 MB)
+# Set a larger field size limit to avoid error
 csv.field_size_limit(100000000)
 
 
@@ -11,6 +13,9 @@ def initialize_data():
         "Player": [],
         "Opponent": [],
         "Date": [],
+        "Tournament": [],
+        "Surface": [],
+        "Round": [],
         "Difference_in_ranks": [],
         "Different_hand": [],
         "Age": [],
@@ -52,21 +57,18 @@ def initialize_data():
     return data, players
 
 
-csv_output = 'F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/data_RN.csv'
-
-
 def convert_to_date(date_str):
     return datetime.strptime(date_str, '%Y%m%d')
 
 
 # check if a date falls within the last 6 months
-def within_last_6_months(date):
-    six_months_ago = datetime.now() - timedelta(days=30 * 6)
-    return date >= six_months_ago
+def within_last_6_months(date_of_the_game):
+    six_months_ago = convert_to_date("20240527") - timedelta(days=30 * 6)
+    return date_of_the_game >= six_months_ago
 
 
 def within_last_year(date):
-    a_year_ago = datetime.now() - timedelta(days=30 * 12)
+    a_year_ago = convert_to_date("20240527") - timedelta(days=30 * 12)
     return date >= a_year_ago
 
 
@@ -94,7 +96,8 @@ def read_csv(csv_file, data, players):
         reader = csv.reader(f)
         next(reader)
         for row in reader:
-            if row[5] == '' or row[10] == '' or row[11] == '' or row[12] == '' or row[14] == '' or row[45] == '' or row[
+            if row[1] == '' or row[2] == '' or row[25] == '' or row[5] == '' or row[10] == '' or row[11] == '' or row[
+                12] == '' or row[14] == '' or row[45] == '' or row[
                 18] == '' or row[19] == '' or row[20] == '' or row[22] == '' or row[47] == '':
                 continue
             # i += 1
@@ -103,6 +106,9 @@ def read_csv(csv_file, data, players):
             random_choose = random.randint(0, 1)
             if random_choose == 0:
                 data["Date"].append(row[5])
+                data["Tournament"].append(row[1])
+                data["Surface"].append(row[2])
+                data["Round"].append(row[25])
                 data["Player"].append(row[10])
                 data["Hand"].append(row[11])
                 data['Height'].append(row[12])
@@ -206,6 +212,9 @@ def read_csv(csv_file, data, players):
                         players[(row[10], 'Opponent_Losses_grass')] += 1
             # -----------------------------------------------
             elif random_choose == 1:
+                data["Tournament"].append(row[1])
+                data["Surface"].append(row[2])
+                data["Round"].append(row[25])
                 data["Date"].append(row[5])
                 data["Player"].append(row[18])
                 data["Hand"].append(row[19])
@@ -334,45 +343,89 @@ def read_csv(csv_file, data, players):
         set_wins_losses(i, 'Opponent_Losses_grass', data, players)
 
 
-def training_data():
+def get_data():
+    # !!!when adding/deleting more years from the csv files, make sure to update the function from above ^^^^^
     data, players = initialize_data()
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2004.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2005.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2006.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2007.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2008.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2009.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2010.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2011.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2012.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2013.csv', data, players)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2014.csv', data, players)
+    read_csv('csv_folder/wta_matches_2024.csv', data, players)
+    read_csv('csv_folder/wta_matches_2023.csv', data, players)
+    read_csv('csv_folder/wta_matches_2022.csv', data, players)
+    read_csv('csv_folder/wta_matches_2021.csv', data, players)
+    read_csv('csv_folder/wta_matches_2020.csv', data, players)
+    read_csv('csv_folder/wta_matches_2019.csv', data, players)
+    read_csv('csv_folder/wta_matches_2018.csv', data, players)
+    read_csv('csv_folder/wta_matches_2017.csv', data, players)
+    read_csv('csv_folder/wta_matches_2016.csv', data, players)
+    read_csv('csv_folder/wta_matches_2015.csv', data, players)
+    read_csv('csv_folder/wta_matches_2014.csv', data, players)
+    read_csv('csv_folder/wta_matches_2013.csv', data, players)
+    read_csv('csv_folder/wta_matches_2012.csv', data, players)
+    read_csv('csv_folder/wta_matches_2011.csv', data, players)
+    read_csv('csv_folder/wta_matches_2010.csv', data, players)
+    read_csv('csv_folder/wta_matches_2009.csv', data, players)
+    read_csv('csv_folder/wta_matches_2008.csv', data, players)
+    read_csv('csv_folder/wta_matches_2007.csv', data, players)
+    read_csv('csv_folder/wta_matches_2006.csv', data, players)
+    read_csv('csv_folder/wta_matches_2005.csv', data, players)
+    read_csv('csv_folder/wta_matches_2004.csv', data, players)
 
-    with open(csv_output, 'w', newline='') as f:
-        writer = csv.DictWriter(f, fieldnames=data.keys())
+    # csv_output = 'csv_folder/data_tour.csv'
+    # with open(csv_output, 'w', newline='') as f:
+    #     writer = csv.DictWriter(f, fieldnames=data.keys())
+    #
+    #     writer.writeheader()
+    #
+    #     for i in range(len(data['Player'])):
+    #         row = {key: data[key][i] for key in data.keys()}
+    #         writer.writerow(row)
+    #
+    # print("CSV file has been created successfully.")
 
-        writer.writeheader()
-
+    all_players = database.get_players_name()
+    players_stats = []
+    for player in all_players:
         for i in range(len(data['Player'])):
             row = {key: data[key][i] for key in data.keys()}
-            writer.writerow(row)
+            if row['Player'] == player[0]:
+                players_stats.append({
+                    'name': row['Player'],
+                    'height': row['Height'],
+                    'age': row['Age'],
+                    'rank': row['Rank'],
+                    'hand': row['Hand'],
+                    'wins_semester': row['Wins_semester'],
+                    'losses_semester': row['Losses_semester'],
+                    'wins_year': row['Wins_year'],
+                    'losses_year': row['Losses_year'],
+                    'wins_hard': row['Wins_hard'],
+                    'losses_hard': row['Losses_hard'],
+                    'wins_clay': row['Wins_clay'],
+                    'losses_clay': row['Losses_clay'],
+                    'wins_grass': row['Wins_grass'],
+                    'losses_grass': row['Losses_grass']
+                })
+                break
+            elif row['Opponent'] == player[0]:
+                players_stats.append({
+                    'name': row['Opponent'],
+                    'height': row['Opponent_Height'],
+                    'age': row['Opponent_Age'],
+                    'rank': row['Opponent_Rank'],
+                    'hand': row['Opponent_Hand'],
+                    'wins_semester': row['Opponent_Wins_semester'],
+                    'losses_semester': row['Opponent_Losses_semester'],
+                    'wins_year': row['Opponent_Wins_year'],
+                    'losses_year': row['Opponent_Losses_year'],
+                    'wins_hard': row['Opponent_Wins_hard'],
+                    'losses_hard': row['Opponent_Losses_hard'],
+                    'wins_clay': row['Opponent_Wins_clay'],
+                    'losses_clay': row['Opponent_Losses_clay'],
+                    'wins_grass': row['Opponent_Wins_grass'],
+                    'losses_grass': row['Opponent_Losses_grass']
+                })
+                break
+    with open('players_stats.json', 'w') as f:
+        json.dump(players_stats, f)
 
-    print("CSV file has been created successfully.")
-    return data
 
-
-def validation_data():
-    data_validation, players_validation = initialize_data()
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2015.csv', data_validation,
-             players_validation)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2016.csv', data_validation,
-             players_validation)
-    return data_validation
-
-
-def testing_data():
-    data_test, players_test = initialize_data()
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2017.csv', data_test, players_test)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2018.csv', data_test, players_test)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2019.csv', data_test, players_test)
-    return data_test
+if __name__ == '__main__':
+    get_data()

@@ -1,0 +1,127 @@
+# VALIDATION, EARLY STOPPING, TOURNAMENT
+
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense, Dropout
+from tensorflow.keras.optimizers import Adam
+from keras import callbacks
+
+from NeuralNetwork import featuresWithTournament
+import matplotlib.pyplot as plt
+
+
+# USE THIS ANN, IT HAS VALIDATION, EARLY STOPPING AND IT IS FINE
+
+def one_hot_encode_features(feature, data):
+    encoder = OneHotEncoder()
+    surface_encoded = encoder.fit_transform(data[[feature]])
+    surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out([feature]))
+    data.drop(feature, axis=1, inplace=True)
+    data = pd.concat([data, surface_encoded_df], axis=1)
+
+
+# --------------------------PREPARE TRAIN SET AND TEST SET-----------------------------------
+def one_hot_encoding(data):
+    one_hot_encode_features('Player', data)
+    one_hot_encode_features('Opponent', data)
+    one_hot_encode_features('Hand', data)
+    one_hot_encode_features('Opponent_Hand', data)
+    one_hot_encode_features('Tournament', data)
+    one_hot_encode_features('Surface', data)
+    one_hot_encode_features('Round', data)
+    return data
+
+
+# --------------------------PREPARE TRAIN SET AND TEST SET-----------------------------------
+
+feature_cols = ['Age', 'Rank', 'Height', 'Wins_semester', 'Losses_semester',
+                "Wins_year", "Losses_year", "Wins_clay", "Wins_hard", "Wins_grass", "Losses_clay", "Losses_hard",
+                "Losses_grass", "Opponent_Age", "Opponent_Rank", "Opponent_Height", "Opponent_Wins_semester",
+                "Opponent_Losses_semester", "Opponent_Wins_year", "Opponent_Losses_year", "Opponent_Wins_clay",
+                "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
+                "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R']
+
+# print(featuresWithTournament.training_data())
+
+data_training = pd.DataFrame(featuresWithTournament.training_data())
+# data_training.drop('Player', axis=1, inplace=True)
+# data_training.drop('Opponent', axis=1, inplace=True)
+data_training.drop('Date', axis=1, inplace=True)
+data_training = one_hot_encoding(data_training)
+X_train = data_training.iloc[:, :-1]
+y_train = data_training.Outcome
+
+data_validation = pd.DataFrame(featuresWithTournament.validation_data())
+data_validation = one_hot_encoding(data_validation)
+# data_validation.drop('Player', axis=1, inplace=True)
+# data_validation.drop('Opponent', axis=1, inplace=True)
+data_validation.drop('Date', axis=1, inplace=True)
+X_val = data_validation.iloc[:, :-1]
+y_val = data_validation.Outcome
+
+data_testing = pd.DataFrame(featuresWithTournament.testing_data())
+data_testing = one_hot_encoding(data_testing)
+# data_testing.drop('Player', axis=1, inplace=True)
+# data_testing.drop('Opponent', axis=1, inplace=True)
+data_testing.drop('Date', axis=1, inplace=True)
+X_test = data_testing.iloc[:, :-1]
+y_test = data_testing.Outcome
+
+# ----------------------------------- NEURAL NETWORK -----------------------------------
+
+scaler = MinMaxScaler()
+X_train = scaler.fit_transform(X_train)
+X_val = scaler.transform(X_val)
+X_test = scaler.transform(X_test)
+
+X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+X_val = X_val.reshape((X_val.shape[0], X_val.shape[1], 1))
+X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+
+model_ann_tournament = Sequential([
+    Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    # Dropout(0.5),
+    Dense(64, activation='relu'),
+    # Dropout(0.5),
+    Dense(1, activation='sigmoid')
+])
+
+model_ann_tournament.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['accuracy'])
+
+earlystopping = callbacks.EarlyStopping(monitor="val_loss",
+                                        mode="min",
+                                        verbose=1,
+                                        patience=10,
+                                        restore_best_weights=True)
+
+history = model_ann_tournament.fit(X_train, y_train, epochs=30, batch_size=32, validation_data=(X_val, y_val),
+                                   callbacks=[earlystopping])
+# history = model.fit(X_train, y_train, epochs=35, batch_size=32, validation_data=(X_val, y_val))
+
+# loss, accuracy = model_ann_tournament.evaluate(X_test, y_test)
+# print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
+
+# ----------------------------------- PLOT -----------------------------------
+plt.figure(figsize=(12, 4))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Training and Validation Loss')
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Training and Validation Accuracy')
+plt.legend()
+
+plt.tight_layout()
+plt.show()

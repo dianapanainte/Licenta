@@ -3,7 +3,7 @@ import seaborn as sns
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, MinMaxScaler
-import Features_3_0 as features
+from Regresie_logistica_24_03_2024 import Features_3_0 as features
 from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 from sklearn.linear_model import LogisticRegression
 import joblib
@@ -51,40 +51,49 @@ def logistic_regression():
     data_testing = one_hot_encoding(data_testing)
     X_test = data_testing[feature_cols]  # Features
     y_test = data_testing.Outcome  # Target variable
+    print(f"Rows: {len(X_test)}")
+    print(f"Columns: {len(X_test.columns)}")
+
+    data_validation = pd.DataFrame(features.validation_data())
+    data_validation = one_hot_encoding(data_validation)
+    X_val = data_validation[feature_cols]
+    y_val = data_validation.Outcome
 
     # Normalize data
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.fit_transform(X_test)
+    X_val = scaler.fit_transform(X_val)
 
     logreg = LogisticRegression(random_state=16, solver='lbfgs', max_iter=10000)
     logreg.fit(X_train, y_train)
-    y_pred = logreg.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    print("Accuracy: {:.2f}%".format(accuracy * 100))
-    target_names = ['not winner', 'winner']
-    print(classification_report(y_test, y_pred, target_names=target_names))
 
-    #########################
-    y_true = np.array(y_test)
-    y_pred = np.array(y_pred)
-
-    # Compute confusion matrix
-    cm = confusion_matrix(y_true, y_pred)
-
-    # Plot confusion matrix as heatmap
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-
-    plt.title('Confusion Matrix')
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.show()
-    plt.savefig('plots/confusion_matrix_features_3_0_2004-2016.png')
-    return logreg, scaler
+    # y_pred = logreg.predict(X_test)
+    # accuracy = accuracy_score(y_test, y_pred)
+    # print("Accuracy: {:.2f}%".format(accuracy * 100))
+    # target_names = ['not winner', 'winner']
+    # print(classification_report(y_test, y_pred, target_names=target_names))
+    #
+    # #########################
+    # y_true = np.array(y_test)
+    # y_pred = np.array(y_pred)
+    #
+    # # Compute confusion matrix
+    # cm = confusion_matrix(y_true, y_pred)
+    #
+    # # Plot confusion matrix as heatmap
+    # sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+    #
+    # plt.title('Confusion Matrix')
+    # plt.xlabel('Predicted')
+    # plt.ylabel('True')
+    # plt.show()
+    # plt.savefig('plots/confusion_matrix_features_3_0_2004-2016.png')
+    return logreg, scaler, X_test, X_val
 
 
 if __name__ == "__main__":
-    model, scaler = logistic_regression()
+    model, scaler, X_test, X_val = logistic_regression()
     joblib.dump(model, 'logistic_regression_model.joblib')
     loaded_model = joblib.load('logistic_regression_model.joblib')
 
