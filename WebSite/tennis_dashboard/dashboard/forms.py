@@ -25,6 +25,9 @@ class FavoriteForm(forms.ModelForm):
         fields = ['player']
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         super(FavoriteForm, self).__init__(*args, **kwargs)
-        self.fields['player'].queryset = Player.objects.order_by('name')
-        self.fields['player'].label = "Select Player to add to Favourites:\n"
+        if user is not None:
+            favorited_players = UserFavorite.objects.filter(user=user).values_list('player__player_id', flat=True)
+            self.fields['player'].queryset = Player.objects.exclude(player_id__in=favorited_players).order_by('name')
+        self.fields['player'].label = "Select Player to Add to Favorites\n"

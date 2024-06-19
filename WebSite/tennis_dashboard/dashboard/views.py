@@ -20,14 +20,14 @@ def dashboard_view(request):
 @login_required
 def add_favourite_view(request):
     if request.method == 'POST':
-        form = FavoriteForm(request.POST)
+        form = FavoriteForm(request.POST, user=request.user)
         if form.is_valid():
             favorite = form.save(commit=False)
             favorite.user = request.user
             favorite.save()
             return redirect('favourites')
     else:
-        form = FavoriteForm()
+        form = FavoriteForm(user=request.user)
     return render(request, 'dashboard/add_favourite.html', {'form': form})
 
 
