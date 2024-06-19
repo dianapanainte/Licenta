@@ -40,8 +40,8 @@ def clean_and_concatenate_json_files(file1_path, file2_path, output_file_path):
         print(f"Error: {e}")
 
 
-file1_path = 'players.json'
-file2_path = 'players_2020-2023.json'
-output_file_path = 'all_players.json'
+file1_path = 'all_tournaments.json'
+file2_path = 'tournaments_5.json'
+output_file_path = 'tournaments.json'
 
 clean_and_concatenate_json_files(file1_path, file2_path, output_file_path)

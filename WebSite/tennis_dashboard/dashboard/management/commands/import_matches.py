@@ -4,7 +4,7 @@ from os import path
 
 from django.core.management.base import BaseCommand
 sys.path.append(path.abspath('../tennis_dashboard'))
-from dashboard.models import RecentTournament
+from dashboard.models import Tournament, Player
 
 
 class Command(BaseCommand):
@@ -19,11 +19,19 @@ class Command(BaseCommand):
         with open(json_file) as file:
             data = json.load(file)
             for entry in data:
-                RecentTournament.objects.create(
+                player_name = entry['name']
+                player = Player.objects.get(name=player_name)
+                Tournament.objects.create(
+                    player=player,
                     date=entry['date'],
-                    surface=entry['surface'],
+                    name=entry['tournament'],
+                    opponent_player=entry['opponent_player'],
+                    opponent_rank=entry['opponent_rank'],
                     location=entry['location'],
-                    title=entry['title']
+                    surface=entry['surface'],
+                    round=entry['round'],
+                    score=entry['score'],
+                    result=entry['result']
                 )
 
         self.stdout.write(self.style.SUCCESS('Successfully imported data'))

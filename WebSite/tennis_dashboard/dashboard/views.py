@@ -3,18 +3,39 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
-from .models import RecentTournament
+from .models import RecentTournament, Player, Tournament
+from .models import UserFavorite
+from .forms import FavoriteForm
 
 
 @login_required(login_url='/login/')
 def dashboard_view(request):
-    tournaments = RecentTournament.objects.all()
-    return render(request, 'dashboard/dashboard.html', {'tournaments': tournaments})
+    past_tournaments = RecentTournament.objects.past_tournaments()
+    future_tournaments = RecentTournament.objects.future_tournaments()
+    players = Player.objects.all().order_by('name')
+    return render(request, 'dashboard/dashboard.html',
+                  {'tournaments': past_tournaments, 'future_tournaments': future_tournaments, 'players': players})
+
+
+@login_required
+def add_favourite_view(request):
+    if request.method == 'POST':
+        form = FavoriteForm(request.POST)
+        if form.is_valid():
+            favorite = form.save(commit=False)
+            favorite.user = request.user
+            favorite.save()
+            return redirect('favourites')
+    else:
+        form = FavoriteForm()
+    return render(request, 'dashboard/add_favourite.html', {'form': form})
 
 
 @login_required(login_url='/login/')
 def favourites_view(request):
-    return render(request, 'dashboard/favourites.html')
+    user_favorites = UserFavorite.objects.filter(user=request.user)
+    matches = Tournament.objects.all()
+    return render(request, 'dashboard/favourites.html', {'user_favorites': user_favorites, 'matches': matches})
 
 
 @login_required(login_url='/login/')

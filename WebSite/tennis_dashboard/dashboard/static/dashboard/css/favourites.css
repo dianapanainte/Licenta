@@ -430,6 +430,7 @@ body {
     left: 120px;
     width: 85%;
     height: 60vh;
+    /*min-height: 60vh;*/
     background-color: #000;
     border: 1px solid #ccc;
     padding: 10px;
@@ -442,6 +443,7 @@ body {
     flex-direction: column;
     align-items: center;
     z-index: 1;
+    overflow-y: auto;
 }
 
 .popover {
@@ -467,4 +469,68 @@ body {
 
 .career-content {
     flex: 1;
+}
+
+.add-another-player {
+    margin: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Inika', serif;
+    background-color: #5E28AD;
+    padding: 10px;
+    border-radius: 5px;
+    transition: all 0.5s ease;
+}
+
+.add-another-player:hover {
+    background-color: #A4C2FF;
+    color: #000;
+    transition: all 0.5s ease;
+}
+
+/*---------------------------TABLE------------------*/
+.matches {
+    /*background-color: #6e0f0f;*/
+    display: flex;
+    margin: 10px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.match {
+    padding: 10px;
+    border: 1px solid #A4C2FF;
+    border-radius: 10px;
+    margin: 10px;
+    line-height: 2;
+    width: 350px;
+}
+
+.width-table{
+    width: 100%;
+}
+
+.popover::-webkit-scrollbar {
+    width: 12px;
+}
+
+.popover::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.popover::-webkit-scrollbar-thumb {
+    background: #5d67a5;
+    border-radius: 6px;
+}
+
+.popover::-webkit-scrollbar-thumb:hover {
+    background: #1b1e34;
+}
+
+.little-space {
+    margin: 5px;
+}
+
+.match-score {
+    letter-spacing: 3px;
 }

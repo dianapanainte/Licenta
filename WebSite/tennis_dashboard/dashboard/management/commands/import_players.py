@@ -1,4 +1,3 @@
-# your_app/management/commands/import_tournaments.py
 import json
 import sys
 from os import path

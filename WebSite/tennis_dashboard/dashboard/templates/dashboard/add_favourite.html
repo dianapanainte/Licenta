@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Add Favourite</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/add_favourite.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+<div class="sidebar">
+    <div class="top">
+        <div class="logo">
+            <i class='bx bx-tennis-ball'></i>
+            <span>TennisApp</span>
+        </div>
+        <i class="bx bx-chevron-right" id="btn"></i>
+    </div>
+    <div class="user">
+        <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
+        <div>
+            <p class="bold">Your name</p>
+            <p>Admin</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="{% url 'dashboard' %}">
+                <i class='bx bx-home-alt'></i>
+                <span class="nav-item">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a href="{% url 'favourites' %}">
+                <i class='bx bx-heart'></i>
+                <span class="nav-item">Favourites</span>
+            </a>
+            <span class="tooltip">Favourites</span>
+        </li>
+        <li>
+            <a href="{% url 'account' %}">
+                <i class='bx bx-user'></i>
+                <span class="nav-item">Account</span>
+            </a>
+            <span class="tooltip">Account</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="nav-item">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+        <li>
+            <a href="#" id="logoutLink">
+                <i class='bx bx-log-out'></i>
+                <span class="nav-item">Logout</span>
+            </a>
+            <form id="logoutForm" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+            <span class="tooltip">Logout</span>
+        </li>
+    </ul>
+</div>
+<div class="header">
+    <img src="{% static 'dashboard/images/login_half_page.jpg' %}" class="profile-img" alt="tennis">
+    <div class="header-text">Add Favourite Player</div>
+</div>
+
+<div class="main-content">
+    <a href="{% url 'favourites' %}" class="add-another-player view-favourites">View My Favourites</a>
+    <div class="form-favourite">
+        <h1>Pick Favourite Player</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="add-another-player">Add Favourite</button>
+        </form>
+    </div>
+</div>
+</body>
+
+
+<script>
+    let sidebar = document.querySelector(".sidebar")
+    let btn = document.querySelector("#btn")
+
+    btn.onclick = function () {
+        sidebar.classList.toggle("active")
+    };
+</script>
+<script src="{% static 'dashboard/js/logout.js' %}"></script>
+<script src="{% static 'dashboard/js/favourites.js' %}"></script>
+</html>

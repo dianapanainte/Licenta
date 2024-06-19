@@ -78,9 +78,11 @@
     <div class="header-text">Favourites</div>
 </div>
 <div class="main-content">
+    <a href="{% url 'add_favourite' %}" class="add-another-player">Add Another Favourite</a>
     <div class="container">
+        {% for favorite in user_favorites %}
         <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
+            <div class="container-left-top">{{ favorite.player.name }}</div>
             <hr class="container-left-divider">
             <div class="container-left-bottom card">
                 <div class="simple-data">Last tourney played: Roland Garros, US Open</div>
@@ -90,64 +92,68 @@
                     <div class="data">Statistics</div>
                 </div>
                 <div class="popover">
-                    <!-- Popover content here -->
-                    <div class="career-content">Player career details here</div>
+                    <!-- mathces -->
+                    <div class="career-content">
+                        <div><h3>Last Played Matches of {{ favorite.player.name }}</h3></div>
+                        <div class="matches">
+                            {% for match in matches %}
+                            {% if match.player.name == favorite.player.name %}
+                            {% if match.name == "Not available" %}
+                            <div class="match">
+                                <div>
+                                    Played in {{ match.location }}. <br>
+                                    {{ match.surface }}, Date: {{ match.date }}
+                                </div>
+                                <hr class="container-left-divider little-space">
+                                <div>
+                                    <div>{{ match.opponent_player }} (rank: {{ match.opponent_rank }})</div>
+                                    <table class="width-table">
+                                        <tr>
+                                            <th>Round</th>
+                                            <th>Result</th>
+                                            <th>Score</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ match.round }}</td>
+                                            <td>{{ match.result }}</td>
+                                            <td class="match-score">{{ match.score }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="match">
+                                <div>
+                                    Played at {{ match.name }}, in {{ match.location }}. <br>
+                                    {{ match.surface }}, Date: {{ match.date }}
+                                </div>
+                                <hr class="container-left-divider little-space">
+                                <div>
+                                    <div>{{ match.opponent_player }} (rank: {{ match.opponent_rank }})</div>
+                                    <table class="width-table">
+                                        <tr>
+                                            <th>Round</th>
+                                            <th>Result</th>
+                                            <th>Score</th>
+                                        </tr>
+                                        <tr>
+                                            <td>{{ match.round }}</td>
+                                            <td>{{ match.result }}</td>
+                                            <td class="match-score">{{ match.score }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
                     <button class="btn-close-popover">Close</button>
                 </div>
             </div>
         </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom">
-            </div>
-        </div>
-        <div class="container-left">
-            <div class="container-left-top">Roger Federer</div>
-            <hr class="container-left-divider">
-            <div class="container-left-bottom card">
-                <div class="simple-data">Last tourney played: Roland Garros, US Open</div>
-                <div class="simple-data">Age:</div>
-                <div class="links-to-data card-content">
-                    <div class="data btn-open-popover">Career</div>
-                    <div class="data">Statistics</div>
-                </div>
-                <div class="popover">
-                    Second popover content here
-                    <button class="btn-close-popover">Close Popover</button>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 </body>

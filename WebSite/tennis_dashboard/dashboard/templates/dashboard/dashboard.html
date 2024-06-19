@@ -86,20 +86,83 @@
                 <div class="dropdown">
                     <label for="player1" class="dropdown-label">Player 1:</label>
                     <select id="player1" name="player1" class="dropdown-select chosen-select">
+                        {% for player in players %}
+                        <option value="{{ player.id }}">{{ player.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="dropdown">
                     <label for="player2" class="dropdown-label">Player 2:</label>
                     <select id="player2" name="player2" class="dropdown-select chosen-select">
+                        {% for player in players %}
+                        <option value="{{ player.id }}">{{ player.name }}</option>
+                        {% endfor %}
                     </select>
                 </div>
+                <div class="dropdown">
+                    <label for="tournament" class="dropdown-label">Tournament:</label>
+                    <select id="tournament" name="tournament" class="dropdown-select chosen-select">
+                        {% for tournament in tournaments %}
+                        <option value="{{ tournament.id }}">{{ tournament.title }}</option>
+                        {% endfor %}
+                        {% for tournament in future_tournaments %}
+                        <option value="{{ tournament.id }}">{{ tournament.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="dropdown">
+                    <label for="round" class="dropdown-label">Round:</label>
+                    <select id="round" name="round" class="dropdown-select chosen-select">
+                        <option value="R128">R128</option>
+                        <option value="R64">R64</option>
+                        <option value="R32">R32</option>
+                        <option value="R16">R16</option>
+                        <option value="QF">QF</option>
+                        <option value="SF">SF</option>
+                        <option value="F">F</option>
+                    </select>
+                </div>
+
+                <div class="predict-button" id="predictButton">Predict</div>
             </div>
         </div>
         <div class="container-right">
-            <div class="container-right-top">Recent tournaments</div>
+            <div class="container-right-top">
+                This month + past tournaments
+                <div class="future-button" id="showFutureTournaments">
+                    Future tournaments
+                </div>
+            </div>
             <hr class="container-left-divider">
             <div class="container-left-bottom">
                 {% for tournament in tournaments %}
+                <div class="tournament">
+                    <div>
+                        <b>Tournament:</b> {{ tournament.title }}
+                    </div>
+                    <div>
+                        <b>Location:</b> {{ tournament.location }}
+                    </div>
+                    <div>
+                        <b>Date:</b> {{ tournament.date }}
+                    </div>
+                    <div>
+                        <b>Surface:</b> {{ tournament.surface }}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="future-tournaments">
+            <div class="container-right-top">
+                Future tournaments
+                <div class="future-button" id="showPastTournaments">
+                    Past tournaments
+                </div>
+            </div>
+            <hr class="container-left-divider">
+            <div class="container-left-bottom">
+                {% for tournament in future_tournaments %}
                 <div class="tournament">
                     <div>
                         <b>Tournament:</b> {{ tournament.title }}

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+import datetime
 
 
 class Player(models.Model):
@@ -13,6 +15,56 @@ class Player(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class RecentTournamentManager(models.Manager):
+    def past_tournaments(self):
+        today = timezone.now().date()
+        current_year = today.year
+        current_month = today.month
+
+        tournaments = self.all()
+        filtered_tournaments = []
+
+        for tournament in tournaments:
+            try:
+                start_date_str = tournament.date.split('-')[0].strip() + f", {current_year}"
+                start_date = datetime.datetime.strptime(start_date_str, '%b %d, %Y').date()
+
+                if (start_date.year < current_year) or (
+                        start_date.year == current_year and start_date.month <= current_month):
+                    tournament.start_date_obj = start_date
+                    filtered_tournaments.append(tournament)
+            except ValueError:
+                continue
+
+        filtered_tournaments.sort(key=lambda x: x.start_date_obj, reverse=True)
+
+        return filtered_tournaments
+
+    def future_tournaments(self):
+        today = timezone.now().date()
+        current_year = today.year
+        next_month = today.replace(day=1, month=today.month + 1)
+
+        tournaments = self.all()
+        filtered_tournaments = []
+
+        for tournament in tournaments:
+            try:
+                end_date_str = tournament.date.split('-')[-1].strip()
+                end_date = datetime.datetime.strptime(end_date_str, '%b %d, %Y').date()
+
+                # Check if the tournament end date is from July onwards
+                if end_date.month >= 7:
+                    tournament.end_date_obj = end_date
+                    filtered_tournaments.append(tournament)
+            except ValueError:
+                continue
+
+        filtered_tournaments.sort(key=lambda x: x.end_date_obj)
+
+        return filtered_tournaments
 
 
 class Tournament(models.Model):
@@ -36,6 +88,8 @@ class RecentTournament(models.Model):
     surface = models.CharField(max_length=10)
     location = models.CharField(max_length=200)
     title = models.CharField(max_length=200)
+
+    objects = RecentTournamentManager()
 
     def __str__(self):
         return f"Tournament {self.title} on + {self.date}"
