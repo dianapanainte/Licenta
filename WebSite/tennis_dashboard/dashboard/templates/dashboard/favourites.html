@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load math_filters %}
 
 <html lang="en">
 <head>
@@ -85,11 +86,13 @@
             <div class="container-left-top">{{ favorite.player.name }}</div>
             <hr class="container-left-divider">
             <div class="container-left-bottom card">
-                <div class="simple-data">Last tourney played: Roland Garros, US Open</div>
-                <div class="simple-data">Age:</div>
+                <div class="simple-data">Height: {{ favorite.player.height }} ; Rank: {{ favorite.player.ranking }}
+                </div>
+                <div class="simple-data">Country: {{ favorite.player.country }}</div>
+                <div class="simple-data">Birth Date: {{ favorite.player.date_of_birth }}</div>
                 <div class="links-to-data card-content">
                     <div class="data btn-open-popover">Career</div>
-                    <div class="data">Statistics</div>
+                    <div class="data btn-open-stats">Statistics</div>
                 </div>
                 <div class="popover">
                     <!-- mathces -->
@@ -150,6 +153,56 @@
                         </div>
                     </div>
                     <button class="btn-close-popover">Close</button>
+                </div>
+
+                <div class="popover-stats">
+                    <div class="career-content">
+                        <div><h3>Stats of {{ favorite.player.name }}</h3></div>
+                        <div class="matches">
+                            {% for stat in stats %}
+                            {% if stat.player.name == favorite.player.name %}
+                            <div class="match">
+                                <div>
+                                    {% if stat.hand == "R" %}
+                                    {{ stat.player.name }} is right-handed. <br>
+                                    {% else %}
+                                    {{ stat.player.name }} is left-handed.
+                                    {% endif %}
+                                </div>
+                                <hr class="container-left-divider little-space">
+                                She last played a match when she was {{ stat.age }} years old. <br>
+                            </div>
+                            <div class="match">
+                                Percentage of matches won in the last six months:
+                                <h3> {{ stat.wins_semester|percentage:stat.losses_semester }}% </h3>
+                                (a percentage of 0 or close to that may mean the player did not play many or any matches
+                                in the last six months)
+                            </div>
+                            <div class="match">
+                                Percentage of matches won in the last year:
+                                <h3> {{ stat.wins_year|percentage:stat.losses_year }}% </h3>
+                                (a percentage of 0 or close to that may mean the player did not play many or any matches
+                                in the last year)
+                            </div>
+                            <div class="match">
+                                Percentage of matches won on Clay:
+                                <b> {{ stat.wins_clay|percentage:stat.losses_clay }}% </b> <br>
+                            </div>
+                            <div class="match">
+                                Percentage of matches won on Grass:
+                                <b> {{ stat.wins_grass|percentage:stat.losses_grass }}% </b>
+                                <br>
+                            </div>
+                            <div class="match">
+                                Percentage of matches won on Hard:
+                                <b> {{ stat.wins_hard|percentage:stat.losses_hard }}% </b>
+                                <br>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button class="btn-close-stats">Close</button>
                 </div>
             </div>
         </div>

@@ -103,7 +103,7 @@ class UserFavorite(models.Model):
         return f"{self.user.username} - {self.player.name}"
 
 
-class PlayerStats(models.Model):
+class PlayerStat(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name='stats')
     height = models.CharField(max_length=10)
     hand = models.CharField(max_length=10)

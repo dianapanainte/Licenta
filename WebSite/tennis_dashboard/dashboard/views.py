@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
-from .models import RecentTournament, Player, Tournament
+from .models import RecentTournament, Player, Tournament, PlayerStat
 from .models import UserFavorite
 from .forms import FavoriteForm
 
@@ -35,7 +35,13 @@ def add_favourite_view(request):
 def favourites_view(request):
     user_favorites = UserFavorite.objects.filter(user=request.user)
     matches = Tournament.objects.all()
-    return render(request, 'dashboard/favourites.html', {'user_favorites': user_favorites, 'matches': matches})
+    stats = PlayerStat.objects.all()
+    # print(stats.values())
+    # # print player hands
+    # for stat in stats:
+    #     print(stat.hand)
+    return render(request, 'dashboard/favourites.html',
+                  {'user_favorites': user_favorites, 'matches': matches, 'stats': stats})
 
 
 @login_required(login_url='/login/')

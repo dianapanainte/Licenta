@@ -408,6 +408,9 @@ body {
 .data, .simple-data {
     margin: 5px;
 }
+.simple-data {
+    font-size: 14px;
+}
 
 .data {
     padding: 5px;
@@ -510,20 +513,20 @@ body {
     width: 100%;
 }
 
-.popover::-webkit-scrollbar {
+.popover-stats::-webkit-scrollbar {
     width: 12px;
 }
 
-.popover::-webkit-scrollbar-track {
+.popover-stats::-webkit-scrollbar-track {
     background: #ffffff;
 }
 
-.popover::-webkit-scrollbar-thumb {
+.popover-stats::-webkit-scrollbar-thumb {
     background: #5d67a5;
     border-radius: 6px;
 }
 
-.popover::-webkit-scrollbar-thumb:hover {
+.popover-stats::-webkit-scrollbar-thumb:hover {
     background: #1b1e34;
 }
 
@@ -533,4 +536,47 @@ body {
 
 .match-score {
     letter-spacing: 3px;
+}
+
+.popover-stats {
+    display: none;
+    position: fixed;
+    left: 120px;
+    width: 85%;
+    height: 60vh;
+    /*min-height: 60vh;*/
+    background-color: #000;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-left: 30px;
+    z-index: -1;
+}
+
+.popover-stats.open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+    overflow-y: auto;
+}
+
+.popover-stats {
+    margin: 30px;
+    padding: 15px;
+    background-color: #131C2D;
+    border-radius: 20px;
+    box-shadow: 0 0 15px #A4C2FF;
+}
+
+.btn-close-stats {
+    margin: 20px;
+    padding: 10px;
+    background-color: #5E28AD;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    width: 300px;
+    font-family: 'Inika', serif;
+    align-items: flex-end;
 }
