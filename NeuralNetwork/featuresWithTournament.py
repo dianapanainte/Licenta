@@ -94,7 +94,8 @@ def read_csv(csv_file, data, players):
         reader = csv.reader(f)
         next(reader)
         for row in reader:
-            if row[1] == '' or row[2] == '' or row[25] == '' or row[5] == '' or row[10] == '' or row[11] == '' or row[12] == '' or row[14] == '' or row[45] == '' or row[
+            if row[1] == '' or row[2] == '' or row[25] == '' or row[5] == '' or row[10] == '' or row[11] == '' or row[
+                12] == '' or row[14] == '' or row[45] == '' or row[
                 18] == '' or row[19] == '' or row[20] == '' or row[22] == '' or row[47] == '':
                 continue
             # i += 1
@@ -371,8 +372,10 @@ def training_data():
 
 def validation_data():
     data_validation, players_validation = initialize_data()
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2015.csv', data_validation, players_validation)
-    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2016.csv', data_validation, players_validation)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2015.csv', data_validation,
+             players_validation)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2016.csv', data_validation,
+             players_validation)
     return data_validation
 
 
@@ -382,6 +385,27 @@ def testing_data():
     read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2018.csv', data_test, players_test)
     read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2019.csv', data_test, players_test)
     return data_test
+
+
+def all_data():
+    data_all, players_all = initialize_data()
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2004.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2005.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2006.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2007.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2008.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2009.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2010.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2011.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2012.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2013.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2014.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2015.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2016.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2017.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2018.csv', data_all, players_all)
+    read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/wta_matches_2019.csv', data_all, players_all)
+    return data_all
 
 
 if __name__ == '__main__':

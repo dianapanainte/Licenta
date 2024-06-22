@@ -8,6 +8,7 @@ from tensorflow.keras.optimizers import Adam
 from keras import callbacks
 from NeuralNetwork import features
 import matplotlib.pyplot as plt
+import joblib
 
 
 # USE THIS ANN, IT HAS VALIDATION, EARLY STOPPING AND IT IS FINE
@@ -24,7 +25,7 @@ def one_hot_encoding(data):
 
     # Concatenate the encoded features with the original data
     data = pd.concat([data, surface_encoded_df], axis=1)
-
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_encoder_hand.joblib')
     # -----------------------------------------------------------for opponent hand
     # One-hot encode the 'Opponent_Hand' feature
     encoder = OneHotEncoder()
@@ -37,6 +38,7 @@ def one_hot_encoding(data):
 
     # Concatenate the encoded features with the original data
     data = pd.concat([data, surface_encoded_df], axis=1)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_encoder_opponent_hand.joblib')
     return data
 
 
@@ -74,6 +76,8 @@ X_train = scaler.fit_transform(X_train)
 X_val = scaler.transform(X_val)
 X_test = scaler.transform(X_test)
 
+ann_scaler = joblib.dump(scaler, 'F:/GithubCloning/Licenta/1_FinalModel/scalers/ann_scaler.joblib')
+
 X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
 X_val = X_val.reshape((X_val.shape[0], X_val.shape[1], 1))
 X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
@@ -99,15 +103,16 @@ history = model_ann_validation.fit(X_train, y_train, epochs=35, batch_size=32, v
 
 # loss, accuracy = model_ann_validation.evaluate(X_test, y_test)
 # print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
-
+model_ann_validation.save('F:\\GithubCloning\\Licenta\\1_FinalModel\\models\\ann_validation.keras')
 # ----------------------------------- PLOT -----------------------------------
 plt.figure(figsize=(12, 4))
 
 plt.subplot(1, 2, 1)
 plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
-plt.title('Training Loss')
+plt.title('Training and Validation Loss')
 plt.legend()
 
 plt.subplot(1, 2, 2)

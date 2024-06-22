@@ -31,3 +31,21 @@ class FavoriteForm(forms.ModelForm):
             favorited_players = UserFavorite.objects.filter(user=user).values_list('player__player_id', flat=True)
             self.fields['player'].queryset = Player.objects.exclude(player_id__in=favorited_players).order_by('name')
         self.fields['player'].label = "Select Player to Add to Favorites\n"
+
+
+class PlayerForm(forms.Form):
+    player1 = forms.ChoiceField(choices=[], label="Player 1")
+    player2 = forms.ChoiceField(choices=[], label="Player 2")
+
+    def __init__(self, *args, **kwargs):
+        players = kwargs.pop('players')
+        super(PlayerForm, self).__init__(*args, **kwargs)
+        self.fields['player1'].choices = [(player.player_id, player.name) for player in players]
+        self.fields['player2'].choices = [(player.player_id, player.name) for player in players]
+
+
+class CustomPlayerForm(forms.Form):
+    player1 = forms.CharField(widget=forms.HiddenInput(), required=True)
+    player2 = forms.CharField(widget=forms.HiddenInput(), required=True)
+    tournament = forms.CharField(widget=forms.HiddenInput(), required=True)
+    round = forms.CharField(widget=forms.HiddenInput(), required=True)

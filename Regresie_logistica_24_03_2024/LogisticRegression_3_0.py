@@ -17,6 +17,7 @@ def one_hot_encoding(data):
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out(['Hand']))
     data.drop('Hand', axis=1, inplace=True)
     data = pd.concat([data, surface_encoded_df], axis=1)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/lr_encoder_hand.joblib')
     # -----------------------------------------------------------for opponent hand
     encoder = OneHotEncoder()
     surface_encoded = encoder.fit_transform(data[['Opponent_Hand']])
@@ -24,6 +25,7 @@ def one_hot_encoding(data):
                                       columns=encoder.get_feature_names_out(['Opponent_Hand']))
     data.drop('Opponent_Hand', axis=1, inplace=True)
     data = pd.concat([data, surface_encoded_df], axis=1)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/lr_encoder_opponent_hand.joblib')
     return data
 
 
@@ -58,6 +60,9 @@ def logistic_regression():
     data_validation = one_hot_encoding(data_validation)
     X_val = data_validation[feature_cols]
     y_val = data_validation.Outcome
+
+    print(f"Rows: {len(X_val)}")
+    print(f"Columns: {len(X_val.columns)}")
 
     # Normalize data
     scaler = MinMaxScaler()

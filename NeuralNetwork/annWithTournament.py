@@ -11,6 +11,7 @@ from keras import callbacks
 
 from NeuralNetwork import featuresWithTournament
 import matplotlib.pyplot as plt
+import joblib
 
 
 # USE THIS ANN, IT HAS VALIDATION, EARLY STOPPING AND IT IS FINE
@@ -21,17 +22,25 @@ def one_hot_encode_features(feature, data):
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out([feature]))
     data.drop(feature, axis=1, inplace=True)
     data = pd.concat([data, surface_encoded_df], axis=1)
+    return encoder
 
 
 # --------------------------PREPARE TRAIN SET AND TEST SET-----------------------------------
 def one_hot_encoding(data):
-    one_hot_encode_features('Player', data)
-    one_hot_encode_features('Opponent', data)
-    one_hot_encode_features('Hand', data)
-    one_hot_encode_features('Opponent_Hand', data)
-    one_hot_encode_features('Tournament', data)
-    one_hot_encode_features('Surface', data)
-    one_hot_encode_features('Round', data)
+    encoder = one_hot_encode_features('Player', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_player.joblib')
+    encoder = one_hot_encode_features('Opponent', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
+    encoder = one_hot_encode_features('Hand', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_hand.joblib')
+    encoder = one_hot_encode_features('Opponent_Hand', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_opponent_hand.joblib')
+    encoder = one_hot_encode_features('Tournament', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_tournament.joblib')
+    encoder = one_hot_encode_features('Surface', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_surface.joblib')
+    encoder = one_hot_encode_features('Round', data)
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_tournament_encoder_round.joblib')
     return data
 
 
@@ -83,7 +92,7 @@ X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
 
 model_ann_tournament = Sequential([
     Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
-    # Dropout(0.5),
+    Dropout(0.5),
     Dense(64, activation='relu'),
     # Dropout(0.5),
     Dense(1, activation='sigmoid')
@@ -101,26 +110,26 @@ history = model_ann_tournament.fit(X_train, y_train, epochs=30, batch_size=32, v
                                    callbacks=[earlystopping])
 # history = model.fit(X_train, y_train, epochs=35, batch_size=32, validation_data=(X_val, y_val))
 
-# loss, accuracy = model_ann_tournament.evaluate(X_test, y_test)
-# print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
-
+loss, accuracy = model_ann_tournament.evaluate(X_test, y_test)
+print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
+model_ann_tournament.save('F:\\GithubCloning\\Licenta\\1_FinalModel\\models\\ann_tournament.keras')
 # ----------------------------------- PLOT -----------------------------------
 plt.figure(figsize=(12, 4))
 
 plt.subplot(1, 2, 1)
 plt.plot(history.history['loss'], label='Training Loss')
-plt.plot(history.history['val_loss'], label='Validation Loss')
+# plt.plot(history.history['val_loss'], label='Validation Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
-plt.title('Training and Validation Loss')
+plt.title('Training Loss')
 plt.legend()
 
 plt.subplot(1, 2, 2)
 plt.plot(history.history['accuracy'], label='Training Accuracy')
-plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+# plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
-plt.title('Training and Validation Accuracy')
+plt.title('Training Accuracy')
 plt.legend()
 
 plt.tight_layout()

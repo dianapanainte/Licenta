@@ -28,7 +28,7 @@
     <div class="user">
         <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
         <div>
-            <p class="bold">Your name</p>
+            <p class="bold">Panainte Diana</p>
             <p>Admin</p>
         </div>
     </div>
@@ -83,47 +83,58 @@
             <div class="container-left-top">Pick two players and see what their match would be like:</div>
             <hr class="container-left-divider">
             <div class="container-left-bottom">
-                <div class="dropdown">
-                    <label for="player1" class="dropdown-label">Player 1:</label>
-                    <select id="player1" name="player1" class="dropdown-select chosen-select">
-                        {% for player in players %}
-                        <option value="{{ player.id }}">{{ player.name }}</option>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="dropdown">
+                        <label for="player1" class="dropdown-label">Player 1:</label>
+                        <!--                        {{ form.player1 }}-->
+                        <select id="player1" name="player1" class="dropdown-select chosen-select">
+                            {% for player in players %}
+                            <option value="{{ player.player_id }}">{{ player.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="dropdown">
+                        <label for="player2" class="dropdown-label">Player 2:</label>
+                        <!--                        {{ form.player2 }}-->
+                        <select id="player2" name="player2" class="dropdown-select chosen-select">
+                            {% for player in players %}
+                            <option value="{{ player.player_id }}">{{ player.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="dropdown">
+                        <label for="tournament" class="dropdown-label">Tournament:</label>
+                        <select id="tournament" name="tournament" class="dropdown-select chosen-select">
+                            {% for tournament in tournaments %}
+                            <option value="{{ tournament.id }}">{{ tournament.title }}</option>
+                            {% endfor %}
+                            {% for tournament in future_tournaments %}
+                            <option value="{{ tournament.id }}">{{ tournament.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="dropdown">
+                        <label for="round" class="dropdown-label">Round:</label>
+                        <select id="round" name="round" class="dropdown-select chosen-select">
+                            <option value="R128">R128</option>
+                            <option value="R64">R64</option>
+                            <option value="R32">R32</option>
+                            <option value="R16">R16</option>
+                            <option value="QF">QF</option>
+                            <option value="SF">SF</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                    {% if form.errors %}
+                    <div class="error">
+                        {% for error in form.non_field_errors %}
+                        <p>{{ error }}</p>
                         {% endfor %}
-                    </select>
-                </div>
-                <div class="dropdown">
-                    <label for="player2" class="dropdown-label">Player 2:</label>
-                    <select id="player2" name="player2" class="dropdown-select chosen-select">
-                        {% for player in players %}
-                        <option value="{{ player.id }}">{{ player.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="dropdown">
-                    <label for="tournament" class="dropdown-label">Tournament:</label>
-                    <select id="tournament" name="tournament" class="dropdown-select chosen-select">
-                        {% for tournament in tournaments %}
-                        <option value="{{ tournament.id }}">{{ tournament.title }}</option>
-                        {% endfor %}
-                        {% for tournament in future_tournaments %}
-                        <option value="{{ tournament.id }}">{{ tournament.title }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="dropdown">
-                    <label for="round" class="dropdown-label">Round:</label>
-                    <select id="round" name="round" class="dropdown-select chosen-select">
-                        <option value="R128">R128</option>
-                        <option value="R64">R64</option>
-                        <option value="R32">R32</option>
-                        <option value="R16">R16</option>
-                        <option value="QF">QF</option>
-                        <option value="SF">SF</option>
-                        <option value="F">F</option>
-                    </select>
-                </div>
-
-                <div class="predict-button" id="predictButton">Predict</div>
+                    </div>
+                    {% endif %}
+                    <button class="predict-button" id="predictButton" type="submit">Predict</button>
+                </form>
             </div>
         </div>
         <div class="container-right">
