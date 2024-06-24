@@ -12,20 +12,20 @@ pd.set_option('display.max_columns', None)
 
 
 def one_hot_encoding(data):
-    encoder = OneHotEncoder()
+    encoder = OneHotEncoder(handle_unknown='ignore')
     surface_encoded = encoder.fit_transform(data[['Hand']])
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out(['Hand']))
     data.drop('Hand', axis=1, inplace=True)
     data = pd.concat([data, surface_encoded_df], axis=1)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/lr_encoder_hand.joblib')
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/lr_encoder_hand.joblib')
     # -----------------------------------------------------------for opponent hand
-    encoder = OneHotEncoder()
+    encoder = OneHotEncoder(handle_unknown='ignore')
     surface_encoded = encoder.fit_transform(data[['Opponent_Hand']])
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(),
                                       columns=encoder.get_feature_names_out(['Opponent_Hand']))
     data.drop('Opponent_Hand', axis=1, inplace=True)
     data = pd.concat([data, surface_encoded_df], axis=1)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/lr_encoder_opponent_hand.joblib')
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/lr_encoder_opponent_hand.joblib')
     return data
 
 

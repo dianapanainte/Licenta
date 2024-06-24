@@ -12,7 +12,8 @@ from tensorflow.keras.optimizers import SGD
 import joblib
 
 LR, scaler, X_test_lr, X_new_lr = LogisticRegression.logistic_regression()
-joblib.dump(LR, 'models/LR_model.pkl')
+joblib.dump(LR, 'models/LR_model.joblib')
+joblib.dump(scaler, 'F:/GithubCloning/Licenta/FinalModel/scalers/LR_scaler.joblib')
 
 ann_val_pred = annWithValidation.model_ann_validation.predict(annWithValidation.X_test)
 ann_tour_pred = annWithTournament.model_ann_tournament.predict(annWithTournament.X_test)
@@ -27,7 +28,7 @@ meta_model = Sequential([
 meta_model.compile(optimizer=SGD(), loss='binary_crossentropy', metrics=['accuracy'])
 history = meta_model.fit(X_val_meta, y_val_meta, epochs=50, verbose=1)
 
-meta_model.save('models/meta_model.keras')
+meta_model.save('models/meta_model.h5')
 
 plt.plot(history.history['accuracy'], label='Train Accuracy')
 plt.xlabel('Epochs')

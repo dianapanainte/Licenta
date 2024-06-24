@@ -106,18 +106,14 @@
                     <div class="dropdown">
                         <label for="tournament" class="dropdown-label">Tournament:</label>
                         <select id="tournament" name="tournament" class="dropdown-select chosen-select">
-                            {% for tournament in tournaments %}
-                            <option value="{{ tournament.id }}">{{ tournament.title }}</option>
-                            {% endfor %}
-                            {% for tournament in future_tournaments %}
-                            <option value="{{ tournament.id }}">{{ tournament.title }}</option>
+                            {% for tournament in all_tournaments %}
+                            <option value="{{ tournament.id }}">{{ tournament.tournament }}</option>
                             {% endfor %}
                         </select>
                     </div>
                     <div class="dropdown">
                         <label for="round" class="dropdown-label">Round:</label>
                         <select id="round" name="round" class="dropdown-select chosen-select">
-                            <option value="R128">R128</option>
                             <option value="R64">R64</option>
                             <option value="R32">R32</option>
                             <option value="R16">R16</option>

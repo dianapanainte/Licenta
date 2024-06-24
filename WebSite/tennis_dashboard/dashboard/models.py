@@ -123,3 +123,10 @@ class PlayerStat(models.Model):
     def __str__(self):
         return f"{self.player} - stats"
 
+
+class SurfaceTournament(models.Model):
+    tournament = models.CharField(max_length=100)
+    surface = models.CharField(max_length=10)
+
+    def __str__(self):
+        return f"{self.tournament} - {self.surface}"

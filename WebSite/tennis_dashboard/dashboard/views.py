@@ -1,9 +1,11 @@
+import dashboard.tennis as tennis
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import SignUpForm, PlayerForm, CustomPlayerForm
 from django.contrib.auth.decorators import login_required
-from .models import RecentTournament, Player, Tournament, PlayerStat
+from .models import RecentTournament, Player, Tournament, PlayerStat, SurfaceTournament
 from .models import UserFavorite
 from .forms import FavoriteForm
 
@@ -13,6 +15,7 @@ def dashboard_view(request):
     past_tournaments = RecentTournament.objects.past_tournaments()
     future_tournaments = RecentTournament.objects.future_tournaments()
     players = Player.objects.all().order_by('name')
+    tournaments_from_dataset = SurfaceTournament.objects.all().order_by('tournament')
     if request.method == 'POST':
         form = CustomPlayerForm(request.POST)
         if form.is_valid():
@@ -25,16 +28,20 @@ def dashboard_view(request):
             else:
                 player1 = Player.objects.get(player_id=player1_id)
                 player2 = Player.objects.get(player_id=player2_id)
-                tournament = RecentTournament.objects.get(id=tournament_id)
+                tournament = SurfaceTournament.objects.get(id=tournament_id)
+                surface = tournament.surface
                 round = form.cleaned_data['round']
-                print(f"Tournament: {tournament.title}, Round: {round}")
+                player1_stats = PlayerStat.objects.get(id=player1_id)
+                player2_stats = PlayerStat.objects.get(id=player2_id)
+                tennis.predict(player1, player2, tournament, surface, round, player1_stats, player2_stats)
+                print(f"Tournament: {tournament.tournament}, Round: {round}")
                 print(player1.name, player2.name)
     else:
         form = CustomPlayerForm()
 
     return render(request, 'dashboard/dashboard.html',
                   {'tournaments': past_tournaments, 'future_tournaments': future_tournaments, 'players': players,
-                   'form': form})
+                   'form': form, 'all_tournaments': tournaments_from_dataset})
 
 
 @login_required

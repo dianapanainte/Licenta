@@ -346,11 +346,6 @@ def read_csv(csv_file, data, players):
 def get_data():
     # !!!when adding/deleting more years from the csv files, make sure to update the function from above ^^^^^
     data, players = initialize_data()
-    read_csv('csv_folder/wta_matches_2024.csv', data, players)
-    read_csv('csv_folder/wta_matches_2023.csv', data, players)
-    read_csv('csv_folder/wta_matches_2022.csv', data, players)
-    read_csv('csv_folder/wta_matches_2021.csv', data, players)
-    read_csv('csv_folder/wta_matches_2020.csv', data, players)
     read_csv('csv_folder/wta_matches_2019.csv', data, players)
     read_csv('csv_folder/wta_matches_2018.csv', data, players)
     read_csv('csv_folder/wta_matches_2017.csv', data, players)
@@ -368,17 +363,17 @@ def get_data():
     read_csv('csv_folder/wta_matches_2005.csv', data, players)
     read_csv('csv_folder/wta_matches_2004.csv', data, players)
 
-    # csv_output = 'csv_folder/data_tour.csv'
-    # with open(csv_output, 'w', newline='') as f:
-    #     writer = csv.DictWriter(f, fieldnames=data.keys())
-    #
-    #     writer.writeheader()
-    #
-    #     for i in range(len(data['Player'])):
-    #         row = {key: data[key][i] for key in data.keys()}
-    #         writer.writerow(row)
-    #
-    # print("CSV file has been created successfully.")
+    csv_output = 'csv_folder/data_tour_not_use.csv'
+    with open(csv_output, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=data.keys())
+
+        writer.writeheader()
+
+        for i in range(len(data['Player'])):
+            row = {key: data[key][i] for key in data.keys()}
+            writer.writerow(row)
+
+    print("CSV file has been created successfully.")
 
     all_players = database.get_players_name()
     players_stats = []
@@ -423,7 +418,7 @@ def get_data():
                     'losses_grass': row['Opponent_Losses_grass']
                 })
                 break
-    with open('players_stats.json', 'w') as f:
+    with open('players_stats_not_use.json', 'w') as f:
         json.dump(players_stats, f)
 
 

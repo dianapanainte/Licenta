@@ -15,30 +15,21 @@ import joblib
 
 # --------------------------PREPARE TRAIN SET AND TEST SET-----------------------------------
 def one_hot_encoding(data):
-    # One-hot encode the 'Hand' feature
-    encoder = OneHotEncoder()
+    hand_categories = ['Hand_R', 'Hand_L']
+    encoder = OneHotEncoder(handle_unknown='ignore')
     surface_encoded = encoder.fit_transform(data[['Hand']])
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out(['Hand']))
-
-    # Drop the original 'Hand' column
     data.drop('Hand', axis=1, inplace=True)
-
-    # Concatenate the encoded features with the original data
     data = pd.concat([data, surface_encoded_df], axis=1)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_encoder_hand.joblib')
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_encoder_hand.joblib')
     # -----------------------------------------------------------for opponent hand
-    # One-hot encode the 'Opponent_Hand' feature
-    encoder = OneHotEncoder()
+    encoder = OneHotEncoder(handle_unknown='ignore')
     surface_encoded = encoder.fit_transform(data[['Opponent_Hand']])
     surface_encoded_df = pd.DataFrame(surface_encoded.toarray(),
                                       columns=encoder.get_feature_names_out(['Opponent_Hand']))
-
-    # Drop the original 'Opponent_Hand' column
     data.drop('Opponent_Hand', axis=1, inplace=True)
-
-    # Concatenate the encoded features with the original data
     data = pd.concat([data, surface_encoded_df], axis=1)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/1_FinalModel/encoders/ann_encoder_opponent_hand.joblib')
+    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_encoder_opponent_hand.joblib')
     return data
 
 
@@ -49,7 +40,7 @@ feature_cols = ['Age', 'Rank', 'Height', 'Wins_semester', 'Losses_semester',
                 "Losses_grass", "Opponent_Age", "Opponent_Rank", "Opponent_Height", "Opponent_Wins_semester",
                 "Opponent_Losses_semester", "Opponent_Wins_year", "Opponent_Losses_year", "Opponent_Wins_clay",
                 "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
-                "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R']
+                "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R', 'Hand_U', 'Opponent_Hand_U']
 data_training = pd.DataFrame(features.training_data())
 data_training = one_hot_encoding(data_training)
 X_train = data_training[feature_cols]
@@ -76,12 +67,12 @@ X_train = scaler.fit_transform(X_train)
 X_val = scaler.transform(X_val)
 X_test = scaler.transform(X_test)
 
-ann_scaler = joblib.dump(scaler, 'F:/GithubCloning/Licenta/1_FinalModel/scalers/ann_scaler.joblib')
+ann_scaler = joblib.dump(scaler, 'F:/GithubCloning/Licenta/FinalModel/scalers/ann_scaler.joblib')
 
-X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
-X_val = X_val.reshape((X_val.shape[0], X_val.shape[1], 1))
-X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
-
+# X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+# X_val = X_val.reshape((X_val.shape[0], X_val.shape[1], 1))
+# X_test = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+print(X_train.shape[1])
 model_ann_validation = Sequential([
     Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
     Dropout(0.5),
@@ -103,7 +94,7 @@ history = model_ann_validation.fit(X_train, y_train, epochs=35, batch_size=32, v
 
 # loss, accuracy = model_ann_validation.evaluate(X_test, y_test)
 # print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
-model_ann_validation.save('F:\\GithubCloning\\Licenta\\1_FinalModel\\models\\ann_validation.keras')
+model_ann_validation.save('F:\\GithubCloning\\Licenta\\FinalModel\\models\\ann_validation.h5')
 # ----------------------------------- PLOT -----------------------------------
 plt.figure(figsize=(12, 4))
 
