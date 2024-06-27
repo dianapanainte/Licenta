@@ -49,5 +49,3 @@ plt.show()
 # loss, accuracy = meta_model.evaluate(X_new_meta, y_new_pred)
 # print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
 
-# Save the model
-

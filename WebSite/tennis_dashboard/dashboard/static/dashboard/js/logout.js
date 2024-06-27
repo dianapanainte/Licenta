@@ -1,6 +1,6 @@
 document.getElementById('logoutLink').addEventListener('click', function (event) {
-    event.preventDefault();  // Prevent the default action
-    document.getElementById('logoutForm').submit();  // Submit the hidden form
+    event.preventDefault();
+    document.getElementById('logoutForm').submit();
     console.log('logoutForm submitted');
 });
 console.log('logout.js loaded');

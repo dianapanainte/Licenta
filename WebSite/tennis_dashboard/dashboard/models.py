@@ -55,7 +55,6 @@ class RecentTournamentManager(models.Manager):
                 end_date_str = tournament.date.split('-')[-1].strip()
                 end_date = datetime.datetime.strptime(end_date_str, '%b %d, %Y').date()
 
-                # Check if the tournament end date is from July onwards
                 if end_date.month >= 7:
                     tournament.end_date_obj = end_date
                     filtered_tournaments.append(tournament)

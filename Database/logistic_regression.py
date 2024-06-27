@@ -11,11 +11,10 @@ def logistic_regression():
     data = pd.read_csv("post_atp_tennis.csv", header = 0, names=col_names)
     print(data.head())
 
-    # split dataset in features and target variable
     feature_cols = ['Player', 'Opponent', 'Court', 'Surface', 'Best_of', 'Rank_player',
                     'Rank_opponent']
-    X = data[feature_cols]  # Features
-    y = data.Output_label  # Target variable
+    X = data[feature_cols]
+    y = data.Output_label
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=16)
 

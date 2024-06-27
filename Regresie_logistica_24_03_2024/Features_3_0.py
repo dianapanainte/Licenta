@@ -2,7 +2,6 @@ import csv
 from datetime import datetime, timedelta
 import random
 
-# Set a larger field size limit to avoid error
 csv.field_size_limit(100000000)
 
 
@@ -21,8 +20,6 @@ def initialize_data():
         "Losses_semester": [],
         "Wins_year": [],
         "Losses_year": [],
-        # "Wins_career": [], #TBD, when i add more years, not only 2023
-        # "Losses_career": [],
         "Wins_clay": [],
         "Wins_hard": [],
         "Wins_grass": [],
@@ -37,8 +34,6 @@ def initialize_data():
         "Opponent_Losses_semester": [],
         "Opponent_Wins_year": [],
         "Opponent_Losses_year": [],
-        # "Wins_career": [], #TBD, when i add more years, not only 2023
-        # "Losses_career": [],
         "Opponent_Wins_clay": [],
         "Opponent_Wins_hard": [],
         "Opponent_Wins_grass": [],

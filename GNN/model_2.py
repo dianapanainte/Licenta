@@ -12,23 +12,14 @@ from torch_geometric.utils import add_self_loops, degree
 
 class GraphConvolution(MessagePassing):
     def __init__(self, in_channels, out_channels):
-        super(GraphConvolution, self).__init__(aggr='add')  # "Add" aggregation.
+        super(GraphConvolution, self).__init__(aggr='add')
         self.lin = nn.Linear(in_channels, out_channels)
 
     def forward(self, x, edge_index, edge_attr):
-        # x has shape [N, in_channels]
-        # edge_index has shape [2, E]
-
-        # Transform node feature matrix.
         x = self.lin(x)
-
-        # Propagate messages.
         return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x, edge_attr=edge_attr)
 
     def message(self, x_j, edge_attr):
-        # x_j has shape [E, out_channels]
-
-        # Normalize edge features.
         return x_j * edge_attr.view(-1, 1)
 
 
@@ -46,16 +37,15 @@ class GNN(nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-# Example usage
-input_dim = 16  # Adjust according to your node attributes
-hidden_dim = 64
-output_dim = 2  # Assuming binary classification for tennis match prediction
 
-# Instantiate the model
+input_dim = 16
+hidden_dim = 64
+output_dim = 2
+
 model = GNN(input_dim, hidden_dim, output_dim)
 
 node_features = torch.tensor(pd.read_csv('csv_my_data/gnn_features.csv').values, dtype=torch.float)
-num_nodes = node_features.size(0) + 1  # This should be 748
+num_nodes = node_features.size(0) + 1
 
 edge_indices = torch.tensor(pd.read_csv('csv_my_data/gnn_edge_indices.csv').values, dtype=torch.long).t().contiguous()
 labels = torch.tensor(pd.read_csv('csv_my_data/gnn_labels.csv').values, dtype=torch.float)
@@ -81,7 +71,6 @@ test_data = Data(x=node_features, edge_index=test_edge_indices, edge_attr=test_e
 train_loader = DataLoader(train_data, batch_size=64, shuffle=False)
 test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
 
-# Define loss function and optimizer
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 
@@ -103,7 +92,6 @@ def train_model(model, train_loader, optimizer, criterion, num_epochs=10):
 train_model(model, train_loader, optimizer, criterion)
 
 
-# Testing the model
 def test_model(model, test_loader):
     model.eval()
     correct = 0

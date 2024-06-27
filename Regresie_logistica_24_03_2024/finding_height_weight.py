@@ -1,25 +1,21 @@
 import requests
 
+
 def get_height_and_weight(player_name):
-    # Search for Roger Federer on Wikidata
     search_url = f"https://www.wikidata.org/w/api.php?action=wbsearchentities&format=json&search={player_name}&language=en"
     search_response = requests.get(search_url)
     search_data = search_response.json()
 
-    print(search_data)  # Debugging: Print search data to understand its structure
+    print(search_data)
 
-    # Check if the 'search' key exists in the response
     if 'search' in search_data:
-        # Check if any entity matches the search
         if search_data['search']:
             entity_id = search_data['search'][0]['id']
 
-            # Fetch information about the entity
             entity_url = f"https://www.wikidata.org/wiki/Special:EntityData/{entity_id}.json"
             entity_response = requests.get(entity_url)
             entity_data = entity_response.json()
 
-            # Extract height and weight information
             claims = entity_data['entities'][entity_id].get('claims', {})
             height_claim = claims.get('P2048', [])
             weight_claim = claims.get('P2067', [])
@@ -33,7 +29,7 @@ def get_height_and_weight(player_name):
     else:
         return None, None
 
-# Example usage
+
 player_name = "Carlos Alcaraz"
 height, weight = get_height_and_weight(player_name)
 if height and weight:

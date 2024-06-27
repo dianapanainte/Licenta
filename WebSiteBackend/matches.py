@@ -25,7 +25,6 @@ def get_player_matches(url):
         driver = webdriver.Chrome(service=service, options=options)
         driver.set_page_load_timeout(10)
         # time.sleep(random.uniform(5, 10))
-        # make the driver headless
         driver.get(url)
         if "404" in driver.title or "Page Not Found" in driver.page_source:
             print(f"Page {url} does not exist.")

@@ -7,33 +7,21 @@ from sklearn.linear_model import LogisticRegression
 
 pd.set_option('display.max_columns', None)
 
-# Sample data
 data = pd.DataFrame(features.data)
 
-# One-hot encode the 'Hand' feature
 encoder = OneHotEncoder()
 surface_encoded = encoder.fit_transform(data[['Hand']])
 surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out(['Hand']))
-
-# Drop the original 'Hand' column
 data.drop('Hand', axis=1, inplace=True)
-
-# Concatenate the encoded features with the original data
 data = pd.concat([data, surface_encoded_df], axis=1)
 
 # -----------------------------------------------------------for opponent hand
-# One-hot encode the 'Opponent_Hand' feature
 encoder = OneHotEncoder()
 surface_encoded = encoder.fit_transform(data[['Opponent_Hand']])
 surface_encoded_df = pd.DataFrame(surface_encoded.toarray(), columns=encoder.get_feature_names_out(['Opponent_Hand']))
-
-# Drop the original 'Opponent_Hand' column
 data.drop('Opponent_Hand', axis=1, inplace=True)
-
-# Concatenate the encoded features with the original data
 data = pd.concat([data, surface_encoded_df], axis=1)
 
-# Print the encoded data with additional features
 print(data)
 
 
@@ -48,19 +36,17 @@ def logistic_regression():
     # data = pd.read_csv("csv_folder/data_ver_0_0.csv_folder", header=0, names=col_names)
     # print(data.head())
 
-    # split dataset in features and target variable
     feature_cols = ['Difference_in_ranks', 'Different_hand', 'Age', 'Rank', 'Height', 'Wins_semester', 'Losses_semester',
                     "Wins_year", "Losses_year", "Wins_career", "Losses_career", "Wins_clay", "Wins_hard", "Wins_grass", "Losses_clay", "Losses_hard",
                     "Losses_grass", "Opponent_Age", "Opponent_Rank", "Opponent_Height", "Opponent_Wins_semester",
                     "Opponent_Losses_semester", "Opponent_Wins_year", "Opponent_Losses_year", "Opponent_Wins_career", "Opponent_Losses_career", "Opponent_Wins_clay",
                     "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
                     "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R']
-    X = data[feature_cols]  # Features
-    y = data.Outcome  # Target variable
+    X = data[feature_cols]
+    y = data.Outcome
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=16)
 
-    # Normalize data
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)

@@ -12,9 +12,7 @@ conn = psycopg2.connect(
 
 
 def delete_data_from_csv(file_name):
-    # Specify the file name and open it in write mode
     with open(file_name, mode='w', newline='') as file:
-        # Since the file is opened in write mode, it will erase all existing data
         pass
 
     print("Data has been erased from", file_name)

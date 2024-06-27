@@ -39,13 +39,10 @@ if __name__ == "__main__":
     #
     # cursor.close()
     # conn.close()
-    # import pandas
     import pandas as pd
 
     col_names = ['Tournament', 'Date', 'Series', 'Court', 'Surface', 'Round', 'Best of', 'Player_1', 'label']
-    # load dataset
     dataset = pd.read_csv("atp_tennis.csv", header=None, names=col_names)
-    # split dataset in features and target variable
     feature_cols = ['pregnant', 'insulin', 'bmi', 'age', 'glucose', 'bp', 'pedigree']
-    X = dataset[feature_cols]  # Features
-    y = dataset.label  # Target variable
+    X = dataset[feature_cols]
+    y = dataset.label

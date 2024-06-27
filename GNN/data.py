@@ -87,7 +87,7 @@ def get_edge_attributes():
 # numerical_features = node_features[:, :-1]
 # categorical_features = node_features[:, -1].reshape(-1, 1)
 #
-# one_hot_encoder = OneHotEncoder(sparse_output=False)  # Use sparse=False to get a dense array
+# one_hot_encoder = OneHotEncoder(sparse_output=False)
 # categorical_features_encoded = one_hot_encoder.fit_transform(categorical_features)
 
 # numerical_features = numerical_features.reshape(numerical_features.shape[0], -1)

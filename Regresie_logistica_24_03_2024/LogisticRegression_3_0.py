@@ -38,7 +38,6 @@ def logistic_regression():
                     "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
                     "Opponent_Losses_grass"]
 
-    # Training data
     data_training = pd.DataFrame(features.training_data())
     data_training = one_hot_encoding(data_training)
     X_train = data_training[feature_cols]
@@ -48,11 +47,10 @@ def logistic_regression():
     print("Value counts:")
     print(value_counts)
 
-    # Testing data
     data_testing = pd.DataFrame(features.testing_data())
     data_testing = one_hot_encoding(data_testing)
-    X_test = data_testing[feature_cols]  # Features
-    y_test = data_testing.Outcome  # Target variable
+    X_test = data_testing[feature_cols]
+    y_test = data_testing.Outcome
     print(f"Rows: {len(X_test)}")
     print(f"Columns: {len(X_test.columns)}")
 
@@ -64,7 +62,6 @@ def logistic_regression():
     print(f"Rows: {len(X_val)}")
     print(f"Columns: {len(X_val.columns)}")
 
-    # Normalize data
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.fit_transform(X_test)
@@ -83,10 +80,8 @@ def logistic_regression():
     # y_true = np.array(y_test)
     # y_pred = np.array(y_pred)
     #
-    # # Compute confusion matrix
     # cm = confusion_matrix(y_true, y_pred)
     #
-    # # Plot confusion matrix as heatmap
     # sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
     #
     # plt.title('Confusion Matrix')

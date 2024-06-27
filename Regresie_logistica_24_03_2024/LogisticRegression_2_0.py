@@ -36,19 +36,16 @@ def logistic_regression():
                     "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
                     "Opponent_Losses_grass"]
 
-    # Training data
     data_training = pd.DataFrame(features.training_data())
     data_training = one_hot_encoding(data_training)
-    X_train = data_training[feature_cols]  # Features
-    y_train = data_training.Outcome  # Target variable
+    X_train = data_training[feature_cols]
+    y_train = data_training.Outcome
 
-    # Testing data
     data_testing = pd.DataFrame(features.testing_data())
     data_testing = one_hot_encoding(data_testing)
-    X_test = data_testing[feature_cols]  # Features
-    y_test = data_testing.Outcome  # Target variable
+    X_test = data_testing[feature_cols]
+    y_test = data_testing.Outcome
 
-    # Normalize data
     scaler = MinMaxScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.fit_transform(X_test)
@@ -65,10 +62,7 @@ def logistic_regression():
     y_true = np.array(y_test)
     y_pred = np.array(y_pred)
 
-    # Compute confusion matrix
     cm = confusion_matrix(y_true, y_pred)
-
-    # Plot confusion matrix as heatmap
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
 
     plt.title('Confusion Matrix')
@@ -100,4 +94,3 @@ if __name__ == "__main__":
     # predicted_classes = loaded_model.predict(np.reshape(new_data, (1, -1)))
     predicted_classes = loaded_model.predict(new_data)
     print("Predicted classes for a game, but from the other perpective:", predicted_classes)
-    # print()

@@ -1,7 +1,6 @@
 import csv
 from datetime import datetime, timedelta
 
-# Set a larger field size limit (e.g., 10 MB)
 csv.field_size_limit(100000000)
 
 data = {
@@ -18,7 +17,7 @@ data = {
     "Losses_semester": [],
     "Wins_year": [],
     "Losses_year": [],
-    "Wins_career": [],  # TBD, when i add more years, not only 2023
+    "Wins_career": [],
     "Losses_career": [],
     "Wins_clay": [],
     "Wins_hard": [],
@@ -34,7 +33,7 @@ data = {
     "Opponent_Losses_semester": [],
     "Opponent_Wins_year": [],
     "Opponent_Losses_year": [],
-    "Opponent_Wins_career": [],  # TBD, when i add more years, not only 2023
+    "Opponent_Wins_career": [],
     "Opponent_Losses_career": [],
     "Opponent_Wins_clay": [],
     "Opponent_Wins_hard": [],

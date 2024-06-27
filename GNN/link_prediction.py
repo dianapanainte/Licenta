@@ -11,13 +11,9 @@ print(edge_indices)
 src_nodes = edge_indices[0]
 dst_nodes = edge_indices[1]
 
-# Create the DGL graph
 graph = dgl.graph((src_nodes, dst_nodes))
-# dgl.data.
-
 print(graph)
 print(f"Number of nodes: {graph.num_nodes()}")
 print(f"Number of edges: {graph.num_edges()}")
 
-# g = graph[0]
 print(type(graph))

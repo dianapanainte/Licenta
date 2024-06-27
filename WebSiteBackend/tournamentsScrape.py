@@ -20,29 +20,19 @@ time.sleep(random.uniform(5, 10))
 def load_all_tournaments():
     driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.HOME)
 
-    # Initial height of the page
     last_height = driver.execute_script("return document.body.scrollHeight")
 
     while True:
-        # Scroll down to the bottom of the page
         driver.find_element(By.TAG_NAME, 'body').send_keys(Keys.END)
-
-        # Wait for new content to load
         time.sleep(8)
-
-        # Calculate new scroll height and compare with last scroll height
         new_height = driver.execute_script("return document.body.scrollHeight")
-
-        # Break the loop if no new content is loaded
         if new_height == last_height:
             break
         last_height = new_height
 
 
-# Call the function to load all tournaments
 load_all_tournaments()
 
-# Get the page source and parse it with Beautiful Soup
 page_source = driver.page_source
 soup = BeautifulSoup(page_source, 'html.parser')
 

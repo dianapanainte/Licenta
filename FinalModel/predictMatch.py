@@ -37,7 +37,7 @@ def prepare_data_for_model1(data):
     data = scaler.fit_transform(data)
     return data
 
-
+# -----------------PREPARING THE DATA FOR THE SECOND NEURAL NETWORK-----------------
 def prepare_data_for_model2(data):
     # ann_tournament_encoder_player = joblib.load(
     #     'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
