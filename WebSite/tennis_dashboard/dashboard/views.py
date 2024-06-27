@@ -12,10 +12,12 @@ from .forms import FavoriteForm
 
 @login_required(login_url='/login/')
 def dashboard_view(request):
+    user = request.user
     past_tournaments = RecentTournament.objects.past_tournaments()
     future_tournaments = RecentTournament.objects.future_tournaments()
     players = Player.objects.all().order_by('name')
     tournaments_from_dataset = SurfaceTournament.objects.all().order_by('tournament')
+    winner = None
     if request.method == 'POST':
         form = CustomPlayerForm(request.POST)
         if form.is_valid():
@@ -31,21 +33,44 @@ def dashboard_view(request):
                 tournament = SurfaceTournament.objects.get(id=tournament_id)
                 surface = tournament.surface
                 round = form.cleaned_data['round']
-                player1_stats = PlayerStat.objects.get(id=player1_id)
-                player2_stats = PlayerStat.objects.get(id=player2_id)
-                tennis.predict(player1, player2, tournament, surface, round, player1_stats, player2_stats)
-                print(f"Tournament: {tournament.tournament}, Round: {round}")
+                player1_stats = PlayerStat.objects.get(player_id=player1_id)
+                player2_stats = PlayerStat.objects.get(player_id=player2_id)
+                prediction = tennis.predict(player1, player2, tournament, surface, round, player1_stats, player2_stats)
+                if prediction == 1:
+                    print(f"{player1.name} wins")
+                    winner = {
+                        'win': player1,
+                        'lose': player2,
+                        'surface': surface,
+                        'tournament': tournament.tournament,
+                        'round': round,
+                        'won_stats': player1_stats,
+                        'lose_stats': player2_stats
+                    }
+                else:
+                    print(f"{player2.name} wins")
+                    winner = {
+                        'lose': player1,
+                        'win': player2,
+                        'surface': surface,
+                        'tournament': tournament.tournament,
+                        'round': round,
+                        'lose_stats': player1_stats,
+                        'won_stats': player2_stats
+                    }
                 print(player1.name, player2.name)
+                return render(request, 'dashboard/result.html', {'winner': winner})
     else:
         form = CustomPlayerForm()
 
     return render(request, 'dashboard/dashboard.html',
                   {'tournaments': past_tournaments, 'future_tournaments': future_tournaments, 'players': players,
-                   'form': form, 'all_tournaments': tournaments_from_dataset})
+                   'form': form, 'all_tournaments': tournaments_from_dataset, 'winner': winner, 'user': user})
 
 
 @login_required
 def add_favourite_view(request):
+    user = request.user
     if request.method == 'POST':
         form = FavoriteForm(request.POST, user=request.user)
         if form.is_valid():
@@ -55,21 +80,23 @@ def add_favourite_view(request):
             return redirect('favourites')
     else:
         form = FavoriteForm(user=request.user)
-    return render(request, 'dashboard/add_favourite.html', {'form': form})
+    return render(request, 'dashboard/add_favourite.html', {'form': form, 'user': user})
 
 
 @login_required(login_url='/login/')
 def favourites_view(request):
+    user = request.user
     user_favorites = UserFavorite.objects.filter(user=request.user)
     matches = Tournament.objects.all()
     stats = PlayerStat.objects.all()
     return render(request, 'dashboard/favourites.html',
-                  {'user_favorites': user_favorites, 'matches': matches, 'stats': stats})
+                  {'user_favorites': user_favorites, 'matches': matches, 'stats': stats, 'user': user})
 
 
 @login_required(login_url='/login/')
 def account_view(request):
-    return render(request, 'dashboard/account.html')
+    user = request.user
+    return render(request, 'dashboard/account.html', {'user': user})
 
 
 def login_view(request):
@@ -128,3 +155,9 @@ def account_deleted_view(request):
 
 def login_first_view(request):
     return render(request, 'dashboard/login_first_please.html')
+
+
+@login_required(login_url='/login/')
+def result_view(winner, request):
+    user = request.user
+    return render(request, 'dashboard/result.html', {'winner': winner, 'user': user})

@@ -39,10 +39,10 @@ def prepare_data_for_model1(data):
 
 
 def prepare_data_for_model2(data):
-    ann_tournament_encoder_player = joblib.load(
-        'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
-    ann_tournament_encoder_opponent = joblib.load(
-        'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
+    # ann_tournament_encoder_player = joblib.load(
+    #     'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
+    # ann_tournament_encoder_opponent = joblib.load(
+    #     'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
     ann_tournament_encoder_hand = joblib.load(
         'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_hand.joblib')
     ann_tournament_encoder_opponent_hand = joblib.load(
@@ -54,25 +54,25 @@ def prepare_data_for_model2(data):
     ann_tournament_encoder_round = joblib.load(
         'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_round.joblib')
 
-    all_possible_columns = ann_tournament_encoder_player.get_feature_names_out(['Player'])
-    data_encoded = ann_tournament_encoder_player.fit_transform(data[['Player']])
-    data_encoded_df = pd.DataFrame(data_encoded.toarray(),
-                                   columns=ann_tournament_encoder_player.get_feature_names_out(['Player']))
-    data.drop('Player', axis=1, inplace=True)
-    for col in all_possible_columns:
-        if col not in data_encoded_df.columns:
-            data_encoded_df[col] = 0
-    data = pd.concat([data, data_encoded_df], axis=1)
-
-    all_possible_columns = ann_tournament_encoder_opponent.get_feature_names_out(['Opponent'])
-    data_encoded = ann_tournament_encoder_opponent.fit_transform(data[['Opponent']])
-    data_encoded_df = pd.DataFrame(data_encoded.toarray(),
-                                   columns=ann_tournament_encoder_opponent.get_feature_names_out(['Opponent']))
-    data.drop('Opponent', axis=1, inplace=True)
-    for col in all_possible_columns:
-        if col not in data_encoded_df.columns:
-            data_encoded_df[col] = 0
-    data = pd.concat([data, data_encoded_df], axis=1)
+    # all_possible_columns = ann_tournament_encoder_player.get_feature_names_out(['Player'])
+    # data_encoded = ann_tournament_encoder_player.fit_transform(data[['Player']])
+    # data_encoded_df = pd.DataFrame(data_encoded.toarray(),
+    #                                columns=ann_tournament_encoder_player.get_feature_names_out(['Player']))
+    # data.drop('Player', axis=1, inplace=True)
+    # for col in all_possible_columns:
+    #     if col not in data_encoded_df.columns:
+    #         data_encoded_df[col] = 0
+    # data = pd.concat([data, data_encoded_df], axis=1)
+    #
+    # all_possible_columns = ann_tournament_encoder_opponent.get_feature_names_out(['Opponent'])
+    # data_encoded = ann_tournament_encoder_opponent.fit_transform(data[['Opponent']])
+    # data_encoded_df = pd.DataFrame(data_encoded.toarray(),
+    #                                columns=ann_tournament_encoder_opponent.get_feature_names_out(['Opponent']))
+    # data.drop('Opponent', axis=1, inplace=True)
+    # for col in all_possible_columns:
+    #     if col not in data_encoded_df.columns:
+    #         data_encoded_df[col] = 0
+    # data = pd.concat([data, data_encoded_df], axis=1)
 
     all_possible_columns = ann_tournament_encoder_hand.get_feature_names_out(['Hand'])
     all_possible_columns = [col for col in all_possible_columns if col != 'Hand_U']
@@ -86,7 +86,7 @@ def prepare_data_for_model2(data):
     data = pd.concat([data, data_encoded_df], axis=1)
 
     all_possible_columns = ann_tournament_encoder_opponent_hand.get_feature_names_out(['Opponent_Hand'])
-    all_possible_columns = [col for col in all_possible_columns if col != 'Opponent_Hand_U']
+    # all_possible_columns = [col for col in all_possible_columns if col != 'Opponent_Hand_U']
     data_encoded = ann_tournament_encoder_opponent_hand.fit_transform(data[['Opponent_Hand']])
     data_encoded_df = pd.DataFrame(data_encoded.toarray(),
                                    columns=ann_tournament_encoder_opponent_hand.get_feature_names_out(
@@ -166,20 +166,23 @@ def predict_match(data):
     data_model_1 = data.drop(
         columns=['Player', 'Opponent', 'Tournament', 'Surface', 'Round', 'Difference_in_ranks',
                  'Different_hand'])
-    data_model_2 = data.copy()
+    data_model_2 = data.drop(columns=['Player', 'Opponent'])
     data_model_lr = data.drop(
         columns=['Player', 'Opponent', 'Tournament', 'Surface', 'Round', 'Hand', 'Opponent_Hand'])
     # preparing data
     data1 = prepare_data_for_model1(data_model_1)
     data2 = prepare_data_for_model2(data_model_2)
-    # data_lr = prepare_data_for_lr(data_model_lr)
-    # print(f"BEFORE DATA1 SHAPE: {data1.shape}")
-    # data1 = data1.reshape((data1.shape[0], data1.shape[1], 1))
-    # data2 = data2.reshape((data2.shape[0], data2.shape[1], 1))
+    print(data1.shape)
+    print(f"Data2 : {data2.shape}")
     prediction1 = model1.predict(data1)
     prediction2 = model2.predict(data2)
     prediction_lr = lr_model.predict(data_model_lr)
-
+    prediction1 = prediction1.ravel() if len(prediction1.shape) > 1 else prediction1
+    prediction2 = prediction2.ravel() if len(prediction2.shape) > 1 else prediction2
+    prediction_lr = prediction_lr.ravel() if len(prediction_lr.shape) > 1 else prediction_lr
+    print(prediction1.shape)
+    print(prediction2.shape)
+    print(prediction_lr.shape)
     X_val_meta = pd.DataFrame(data={'Model1': prediction1, 'Model2': prediction2, 'LR': prediction_lr})
     meta_prediction = meta_model.predict(X_val_meta)
     return meta_prediction

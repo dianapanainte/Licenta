@@ -1,150 +1,14 @@
 [
     {
-        "tournament": "United Cup",
+        "tournament": "Luxembourg",
         "surface": "Hard"
     },
     {
-        "tournament": "Brisbane",
+        "tournament": "Hiroshima",
         "surface": "Hard"
-    },
-    {
-        "tournament": "Auckland",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Adelaide",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Hobart",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Australian Open",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Hua Hin",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Linz",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Abu Dhabi",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cluj-Napoca",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Doha",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Dubai",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Austin",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "San Diego",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Indian Wells",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Miami",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Bogota",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Charleston",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Rouen",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Stuttgart",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Madrid",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Rome",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Rabat",
-        "surface": "Clay"
     },
     {
         "tournament": "Strasbourg",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Adelaide 1",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Adelaide 2",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Lyon",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Merida",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Monterrey",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Roland Garros",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Nottingham",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Berlin",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Birmingham",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Bad Homburg",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Eastbourne",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Wimbledon",
-        "surface": "Grass"
-    },
-    {
-        "tournament": "Budapest",
         "surface": "Clay"
     },
     {
@@ -152,248 +16,20 @@
         "surface": "Clay"
     },
     {
-        "tournament": "Hamburg",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Lausanne",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Warsaw",
+        "tournament": "Linz",
         "surface": "Hard"
-    },
-    {
-        "tournament": "Prague",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Washington",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Montreal",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cincinnati",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cleveland",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Us Open",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Osaka",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Guadalajara",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Guangzhou",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Ningbo",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Tokyo",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Beijing",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Hong Kong",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Seoul",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Zhengzhou",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cluj Napoca",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Monastir",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Nanchang",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Zhuhai",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cancun Finals",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Melbourne 1",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Melbourne 2",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Sydney",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "St. Petersburg",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Istanbul",
-        "surface": "Clay"
     },
     {
         "tournament": "San Jose",
         "surface": "Hard"
     },
     {
-        "tournament": "Toronto",
+        "tournament": "Dubai",
         "surface": "Hard"
     },
     {
-        "tournament": "Granby",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Chennai",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Portoroz",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Parma",
+        "tournament": "Charleston",
         "surface": "Clay"
-    },
-    {
-        "tournament": "Tallinn",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Ostrava",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Guadalajara 2",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Fort Worth Finals",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Gippsland Trophy",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Yarra Valley Classic",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Grampians Trophy",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Phillip Island Trophy",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Charleston 1",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Charleston 2",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Belgrade",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Gdynia",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Tokyo Olympics",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cluj-Napoca 1",
-        "surface": "Clay"
-    },
-    {
-        "tournament": "Chicago 1",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Luxembourg",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Chicago 2",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Nur-Sultan",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Moscow",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Tenerife",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Cluj-Napoca 2",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Courmayeur",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Guadalajara Finals",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Shenzhen",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Acapulco",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Lexington",
-        "surface": "Hard"
-    },
-    {
-        "tournament": "Hiroshima",
-        "surface": "Hard"
     },
     {
         "tournament": "Toronto ",
@@ -405,6 +41,58 @@
     },
     {
         "tournament": "Tashkent",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Bogota",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Doha",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Rabat",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Guangzhou",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Seoul",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Istanbul",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Monterrey",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Auckland",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Hobart",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Stuttgart",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Birmingham",
+        "surface": "Grass"
+    },
+    {
+        "tournament": "Osaka",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Shenzhen",
         "surface": "Hard"
     },
     {
@@ -424,12 +112,44 @@
         "surface": "Hard"
     },
     {
+        "tournament": "Nanchang",
+        "surface": "Hard"
+    },
+    {
         "tournament": "Bucharest",
         "surface": "Clay"
     },
     {
+        "tournament": "Nottingham",
+        "surface": "Grass"
+    },
+    {
+        "tournament": "Zhuhai",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Prague",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "St. Petersburg",
+        "surface": "Hard"
+    },
+    {
         "tournament": "Mallorca",
         "surface": "Grass"
+    },
+    {
+        "tournament": "Lausanne",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Hua Hin",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Budapest",
+        "surface": "Hard"
     },
     {
         "tournament": "Lugano",
@@ -440,7 +160,75 @@
         "surface": "Clay"
     },
     {
+        "tournament": "Zhengzhou",
+        "surface": "Hard"
+    },
+    {
         "tournament": "New York",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Roland Garros",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Wimbledon",
+        "surface": "Grass"
+    },
+    {
+        "tournament": "Us Open",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Australian Open",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Sydney",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Acapulco",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Indian Wells",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Miami",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Rome",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Moscow",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Beijing",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Eastbourne",
+        "surface": "Grass"
+    },
+    {
+        "tournament": "Brisbane",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Madrid",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Cincinnati",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Washington",
         "surface": "Hard"
     },
     {
@@ -452,7 +240,19 @@
         "surface": "Hard"
     },
     {
+        "tournament": "Montreal",
+        "surface": "Hard"
+    },
+    {
         "tournament": "Singapore",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Tokyo",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Hong Kong",
         "surface": "Hard"
     },
     {
@@ -473,6 +273,10 @@
     },
     {
         "tournament": "Stanford",
+        "surface": "Hard"
+    },
+    {
+        "tournament": "Toronto",
         "surface": "Hard"
     },
     {
@@ -600,11 +404,23 @@
         "surface": "Hard"
     },
     {
+        "tournament": "San Diego",
+        "surface": "Hard"
+    },
+    {
         "tournament": "Marbella",
         "surface": "Clay"
     },
     {
+        "tournament": "Portoroz",
+        "surface": "Hard"
+    },
+    {
         "tournament": "Ponte Vedra Beach",
+        "surface": "Clay"
+    },
+    {
+        "tournament": "Warsaw",
         "surface": "Clay"
     },
     {
@@ -614,6 +430,10 @@
     {
         "tournament": "WTA Tour Championships",
         "surface": "Hard"
+    },
+    {
+        "tournament": "Berlin",
+        "surface": "Clay"
     },
     {
         "tournament": "Bangalore",

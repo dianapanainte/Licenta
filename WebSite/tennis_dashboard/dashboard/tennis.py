@@ -15,7 +15,6 @@ def calculate_age(birth_date, specific_date):
 
 
 def predict(player1, player2, tournament, surface, round, player1_stats, player2_stats):
-    print("PREPARE DATA FOR PREDICTION")
     data = {
         "Player": player1.name,
         "Opponent": player2.name,
@@ -53,7 +52,6 @@ def predict(player1, player2, tournament, surface, round, player1_stats, player2
         "Opponent_Losses_hard": player2_stats.losses_hard,
         "Opponent_Losses_grass": player2_stats.losses_grass
     }
-    print(data)
     prediction = model(data)
-    print(prediction)
-    return prediction
+    prediction_int = (prediction >= 0.5).astype(int)
+    return prediction_int

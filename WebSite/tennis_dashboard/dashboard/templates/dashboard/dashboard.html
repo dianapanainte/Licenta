@@ -28,8 +28,7 @@
     <div class="user">
         <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
         <div>
-            <p class="bold">Panainte Diana</p>
-            <p>Admin</p>
+            <p class="bold">{{ user.username }}</p>
         </div>
     </div>
     <ul>
@@ -82,7 +81,7 @@
         <div class="container-left">
             <div class="container-left-top">Pick two players and see what their match would be like:</div>
             <hr class="container-left-divider">
-            <div class="container-left-bottom">
+            <div class="container-left-bottom active-left">
                 <form method="post">
                     {% csrf_token %}
                     <div class="dropdown">
@@ -132,6 +131,17 @@
                     <button class="predict-button" id="predictButton" type="submit">Predict</button>
                 </form>
             </div>
+<!--            <div class="container-left-bottom disabled-left">-->
+<!--                <div class="result">Result:</div>-->
+<!--                <div class="winner-text">-->
+<!--                    {{ winner.win.name }} won the match from {{ winner.tournament }} on {{ winner.surface }} in-->
+<!--                    the {{ winner.round }} round.-->
+<!--                    <br>Add some statistics here.-->
+<!--                </div>-->
+<!--                <div id="prediction-back">-->
+<!--                    Back-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
         <div class="container-right">
             <div class="container-right-top">

@@ -3,7 +3,7 @@ import json
 
 
 def get_tournaments():
-    csv_file = 'F:/GithubCloning/Licenta/WebSiteBackend/stats/csv_folder/data_tour.csv'
+    csv_file = 'F:/GithubCloning/Licenta/WebSiteBackend/stats/csv_folder/data_tour_not_use.csv'
     tournaments = []
     surfaces = []
     with open(csv_file, 'r') as file:

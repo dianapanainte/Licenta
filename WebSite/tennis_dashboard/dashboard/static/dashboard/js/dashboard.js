@@ -50,3 +50,28 @@ document.addEventListener('DOMContentLoaded', function () {
         futureTournaments.style.display = 'none';
     });
 });
+
+// ---------------------------------------- prediction ----------------------------------------
+// document.addEventListener('DOMContentLoaded', function () {
+//     const predictButton = document.getElementById('predictButton');
+//     const active = document.querySelector('.active-left');
+//     const not_active = document.querySelector('.disabled-left');
+//
+//     predictButton.addEventListener('click', function (event) {
+//         event.preventDefault();
+//         active.style.display = 'none';
+//         not_active.style.display = 'block';
+//     });
+// });
+//
+// document.addEventListener('DOMContentLoaded', function () {
+//     const predictButton = document.getElementById('prediction-back');
+//     const not_active = document.querySelector('.active-left');
+//     const active = document.querySelector('.disabled-left');
+//
+//     predictButton.addEventListener('click', function (event) {
+//         event.preventDefault();
+//         not_active.style.display = 'block';
+//         active.style.display = 'none';
+//     });
+// });

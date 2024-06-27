@@ -30,10 +30,10 @@ def one_hot_encode_features(feature, data):
 
 # --------------------------PREPARE TRAIN SET AND TEST SET-----------------------------------
 def one_hot_encoding_first_time(data):
-    encoder, data = one_hot_encode_features('Player', data)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
-    encoder, data = one_hot_encode_features('Opponent', data)
-    joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
+    # encoder, data = one_hot_encode_features('Player', data)
+    # joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
+    # encoder, data = one_hot_encode_features('Opponent', data)
+    # joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
     encoder, data = one_hot_encode_features('Hand', data)
     joblib.dump(encoder, 'F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_hand.joblib')
     encoder, data = one_hot_encode_features('Opponent_Hand', data)
@@ -48,28 +48,28 @@ def one_hot_encoding_first_time(data):
 
 
 def one_hot_encoding_second_time(data):
-    encoder = joblib.load('F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
-    all_possible_columns = encoder.get_feature_names_out(['Player'])
-    data_encoded = encoder.fit_transform(data[['Player']])
-    data_encoded_df = pd.DataFrame(data_encoded.toarray(),
-                                   columns=encoder.get_feature_names_out(['Player']))
-    data.drop('Player', axis=1, inplace=True)
-    for col in all_possible_columns:
-        if col not in data_encoded_df.columns:
-            data_encoded_df[col] = 0
-    data = pd.concat([data, data_encoded_df], axis=1)
-
-    encoder = joblib.load('F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
-    all_possible_columns = encoder.get_feature_names_out(['Opponent'])
-    # print(f"ALL POSSIBLE COLUMNS 1: {all_possible_columns.shape[0]}")
-    data_encoded = encoder.fit_transform(data[['Opponent']])
-    data_encoded_df = pd.DataFrame(data_encoded.toarray(),
-                                   columns=encoder.get_feature_names_out(['Opponent']))
-    data.drop('Opponent', axis=1, inplace=True)
-    for col in all_possible_columns:
-        if col not in data_encoded_df.columns:
-            data_encoded_df[col] = 0
-    data = pd.concat([data, data_encoded_df], axis=1)
+    # encoder = joblib.load('F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_player.joblib')
+    # all_possible_columns = encoder.get_feature_names_out(['Player'])
+    # data_encoded = encoder.fit_transform(data[['Player']])
+    # data_encoded_df = pd.DataFrame(data_encoded.toarray(),
+    #                                columns=encoder.get_feature_names_out(['Player']))
+    # data.drop('Player', axis=1, inplace=True)
+    # for col in all_possible_columns:
+    #     if col not in data_encoded_df.columns:
+    #         data_encoded_df[col] = 0
+    # data = pd.concat([data, data_encoded_df], axis=1)
+    #
+    # encoder = joblib.load('F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_opponent.joblib')
+    # all_possible_columns = encoder.get_feature_names_out(['Opponent'])
+    # # print(f"ALL POSSIBLE COLUMNS 1: {all_possible_columns.shape[0]}")
+    # data_encoded = encoder.fit_transform(data[['Opponent']])
+    # data_encoded_df = pd.DataFrame(data_encoded.toarray(),
+    #                                columns=encoder.get_feature_names_out(['Opponent']))
+    # data.drop('Opponent', axis=1, inplace=True)
+    # for col in all_possible_columns:
+    #     if col not in data_encoded_df.columns:
+    #         data_encoded_df[col] = 0
+    # data = pd.concat([data, data_encoded_df], axis=1)
 
     encoder = joblib.load('F:/GithubCloning/Licenta/FinalModel/encoders/ann_tournament_encoder_hand.joblib')
     all_possible_columns = encoder.get_feature_names_out(['Hand'])
@@ -153,33 +153,38 @@ def one_hot_encoding_second_time(data):
 # sleep(10)
 
 data_training = pd.DataFrame(featuresWithTournament.training_data())
-# data_training.drop('Player', axis=1, inplace=True)
-# data_training.drop('Opponent', axis=1, inplace=True)
 data_training.drop('Date', axis=1, inplace=True)
+data_training.drop('Player', axis=1, inplace=True)
+data_training.drop('Opponent', axis=1, inplace=True)
 data_training = one_hot_encoding_second_time(data_training)
 X_train = data_training.iloc[:, :-1]
 y_train = data_training.Outcome
 print(f"JUST AFTER ENCODING {X_train.shape[1]}")
 
 data_validation = pd.DataFrame(featuresWithTournament.validation_data())
-data_validation = one_hot_encoding_second_time(data_validation)
-# data_validation.drop('Player', axis=1, inplace=True)
-# data_validation.drop('Opponent', axis=1, inplace=True)
 data_validation.drop('Date', axis=1, inplace=True)
+data_validation.drop('Player', axis=1, inplace=True)
+data_validation.drop('Opponent', axis=1, inplace=True)
+data_validation = one_hot_encoding_second_time(data_validation)
 X_val = data_validation.iloc[:, :-1]
-print(f"JUST AFTER ENCODING {X_val.shape[1]}")
+print(f"JUST AFTER ENCODING {X_train.shape[1], X_val.shape[1]}")
+# print(f"JUST AFTER ENCODING {X_val.shape[1]}")
 y_val = data_validation.Outcome
 
-for val in X_val:
-    if val not in X_train:
-        print(val)
+# for val in X_val:
+#     if val not in X_train:
+#         print(val)
 
 data_testing = pd.DataFrame(featuresWithTournament.testing_data())
-data_testing = one_hot_encoding_second_time(data_testing)
-# data_testing.drop('Player', axis=1, inplace=True)
-# data_testing.drop('Opponent', axis=1, inplace=True)
 data_testing.drop('Date', axis=1, inplace=True)
+data_testing.drop('Player', axis=1, inplace=True)
+data_testing.drop('Opponent', axis=1, inplace=True)
+data_testing = one_hot_encoding_second_time(data_testing)
 X_test = data_testing.iloc[:, :-1]
+X_train, X_test = X_train.align(X_test, join='inner', axis=1)
+X_train, X_val = X_train.align(X_val, join='inner', axis=1)
+print(f"JUST AFTER ENCODING {X_train, X_val, X_test}")
+print(f"JUST AFTER ENCODING {X_train.shape[1], X_val.shape[1], X_test.shape[1]}")
 y_test = data_testing.Outcome
 
 # ----------------------------------- NEURAL NETWORK -----------------------------------
@@ -215,8 +220,8 @@ history = model_ann_tournament.fit(X_train, y_train, epochs=30, batch_size=32, v
                                    callbacks=[earlystopping])
 # history = model.fit(X_train, y_train, epochs=35, batch_size=32, validation_data=(X_val, y_val))
 
-# loss, accuracy = model_ann_tournament.evaluate(X_test, y_test)
-# print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
+loss, accuracy = model_ann_tournament.evaluate(X_test, y_test)
+print(f'Test Loss: {loss}, Test Accuracy: {accuracy}')
 model_ann_tournament.save('F:/GithubCloning/Licenta/FinalModel/models/ann_tournament.h5')
 # ----------------------------------- PLOT -----------------------------------
 plt.figure(figsize=(12, 4))

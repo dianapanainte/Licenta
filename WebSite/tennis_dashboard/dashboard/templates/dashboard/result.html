@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+{% load static %}
+{% load math_filters %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Result</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inika:wght@400;700&display=swap">
+    <link rel="stylesheet" href="{% static 'dashboard/css/result.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="{% static 'dashboard/images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+<div class="sidebar">
+    <div class="top">
+        <div class="logo">
+            <i class='bx bx-tennis-ball'></i>
+            <span>TennisApp</span>
+        </div>
+        <i class="bx bx-chevron-right" id="btn"></i>
+    </div>
+    <div class="user">
+        <img src="{% static 'dashboard/images/user.jpg' %}" class="user-img" alt="user-image">
+        <div>
+            <p class="bold">{{ user.username }}</p>
+        </div>
+    </div>
+    <ul>
+        <li>
+            <a href="{% url 'dashboard' %}">
+                <i class='bx bx-home-alt'></i>
+                <span class="nav-item">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a href="{% url 'favourites' %}">
+                <i class='bx bx-heart'></i>
+                <span class="nav-item">Favourites</span>
+            </a>
+            <span class="tooltip">Favourites</span>
+        </li>
+        <li>
+            <a href="{% url 'account' %}">
+                <i class='bx bx-user'></i>
+                <span class="nav-item">Account</span>
+            </a>
+            <span class="tooltip">Account</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="nav-item">Settings</span>
+            </a>
+            <span class="tooltip">Settings</span>
+        </li>
+        <li>
+            <a href="#" id="logoutLink">
+                <i class='bx bx-log-out'></i>
+                <span class="nav-item">Logout</span>
+            </a>
+            <form id="logoutForm" action="{% url 'logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+            <span class="tooltip">Logout</span>
+        </li>
+    </ul>
+</div>
+<div class="header">
+    <img src="{% static 'dashboard/images/login_half_page.jpg' %}" class="profile-img" alt="tennis">
+    <div class="header-text">Tennis Prediction</div>
+</div>
+<div class="main-content">
+    <div class="result">
+        <h2>Result</h2>
+        <p class="important">
+            {{ winner.win.name }} would win the match from {{ winner.tournament }} on {{ winner.surface }} in
+            the {{ winner.round }} round.
+        </p>
+    </div>
+    <div class="bottom">
+        <div class="stats">
+            <h3>Check out the statistics of the two players:</h3>
+            <div class="each-player">
+                <div class="stats-left">
+                    <h3>{{ winner.win.name }}</h3>
+                    <p>Birthdate: {{ winner.win.date_of_birth }}</p>
+                    <p>Height: {{ winner.won_stats.height }}</p>
+                    <p>Favourite Hand: {{ winner.won_stats.hand }}</p>
+                    {% if winner.surface == 'Clay' %}
+                    <p>Percentage of matches won on clay
+                        : {{ winner.won_stats.wins_clay|percentage:winner.won_stats.losses_clay }}%</p>
+                    {% elif winner.surface == 'Hard' %}
+                    <p>Percentage of matches won on hard
+                        : {{ winner.won_stats.wins_hard|percentage:winner.won_stats.losses_hard }}%</p>
+                    {% else %}
+                    <p>Percentage of matches won on grass
+                        : {{ winner.won_stats.wins_grass|percentage:winner.won_stats.losses_grass }}%</p>
+                    {% endif %}
+                </div>
+                <div class="stats-right">
+                    <h3>{{ winner.lose.name }}</h3>
+                    <p>Birthdate: {{ winner.lose.date_of_birth }}</p>
+                    <p>Height: {{ winner.lose_stats.height }}</p>
+                    <p>Favourite Hand: {{ winner.lose_stats.hand }}</p>
+                    {% if winner.surface == 'Clay' %}
+                    <p>Percentage of matches won on clay
+                        : {{ winner.lose_stats.wins_clay|percentage:winner.lose_stats.losses_clay }}%</p>
+                    {% elif winner.surface == 'Hard' %}
+                    <p>
+                        Percentage of matches won on hard
+                        : {{ winner.lose_stats.wins_hard|percentage:winner.lose_stats.losses_hard }}%
+                    </p>
+                    {% else %}
+                     <p>
+                        Percentage of matches won on grass
+                        : {{ winner.lose_stats.wins_grass|percentage:winner.lose_stats.losses_grass }}%
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="back">
+            <div class="animated-gif">
+                <img class="animated-gif" src="{% static 'dashboard/images/animated-gif.gif' %}" alt="animated-gif">
+            </div>
+            <button onclick="window.history.back()" class="prediction-button">Back</button>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    let sidebar = document.querySelector(".sidebar")
+    let btn = document.querySelector("#btn")
+
+    btn.onclick = function () {
+        sidebar.classList.toggle("active")
+    };
+</script>
+<script src="{% static 'dashboard/js/logout.js' %}"></script>
+</html>

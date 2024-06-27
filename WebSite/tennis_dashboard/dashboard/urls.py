@@ -20,4 +20,5 @@ urlpatterns = [
     path('delete_account/', login_required(views.delete_own_account_view), name='delete_own_account'),
     path('account_deleted/', login_required(views.account_deleted_view), name='account_deleted'),
     path('login_first/', views.login_first_view, name='login_first'),
+    path('result/', login_required(views.result_view), name='result'),
 ]

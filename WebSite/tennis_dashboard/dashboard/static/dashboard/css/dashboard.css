@@ -462,7 +462,7 @@ body {
     background: #090D15;
 }
 
-.predict-button {
+.predict-button, #prediction-back {
     font-size: 16px;
     margin-top: 10px;
     background-color: #4D1F9C;
@@ -476,4 +476,19 @@ body {
 .predict-button:hover {
     background-color: #6E3DC7;
     box-shadow: #5d67a5 1px 1px 5px;
+}
+
+.disabled-left {
+    display: none;
+}
+
+.result {
+    font-size: 25px;
+    font-weight: bolder;
+    margin: 10px;
+}
+
+.winner-text {
+    margin: 10px;
+    line-height: 1.5;
 }

@@ -40,7 +40,7 @@ feature_cols = ['Age', 'Rank', 'Height', 'Wins_semester', 'Losses_semester',
                 "Losses_grass", "Opponent_Age", "Opponent_Rank", "Opponent_Height", "Opponent_Wins_semester",
                 "Opponent_Losses_semester", "Opponent_Wins_year", "Opponent_Losses_year", "Opponent_Wins_clay",
                 "Opponent_Wins_hard", "Opponent_Wins_grass", "Opponent_Losses_clay", "Opponent_Losses_hard",
-                "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R', 'Hand_U', 'Opponent_Hand_U']
+                "Opponent_Losses_grass", "Hand_L", 'Hand_R', "Opponent_Hand_L", 'Opponent_Hand_R']
 data_training = pd.DataFrame(features.training_data())
 data_training = one_hot_encoding(data_training)
 X_train = data_training[feature_cols]
