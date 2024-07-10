@@ -12,7 +12,7 @@ data = pd.read_csv('F:/GithubCloning/Licenta/NeuralNetwork/csv_folder/data_all.c
 # plt.show()
 
 data['Tournament'] = data['Tournament'].apply(
-    lambda x: x if x in ['Wimbledon', 'US Open', 'French Open', 'Australian Open', 'Olympics'] else 'Other')
+    lambda x: x if x in ['Wimbledon', 'US Open', 'Roland Garros', 'Australian Open', 'Olympics'] else 'Other')
 print(data.groupby('Tournament').size())
 
 tournament_counts = data.groupby('Tournament').size()
@@ -21,7 +21,7 @@ plt.title('Distribution of Tournaments')
 plt.ylabel('')
 plt.show()
 
-target_tournaments = ['Wimbledon', 'US Open', 'Australian Open', 'French Open', 'Olympics']
+target_tournaments = ['Wimbledon', 'US Open', 'Australian Open', 'Roland Garros', 'Olympics']
 
 filtered_data = data[data['Tournament'].isin(target_tournaments)]
 print(filtered_data.groupby('Tournament').size())
